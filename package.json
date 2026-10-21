@@ -1,0 +1,45 @@
+{
+  "name": "ml-middle-trainer",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "serve:dist": "node serve.mjs dist 4173",
+    "typecheck": "tsc -b",
+    "check:content": "tsx --tsconfig tsconfig.node.json scripts/check-content.ts",
+    "check:sql": "tsx --tsconfig tsconfig.node.json scripts/run-sql-solutions.ts",
+    "check:py": "tsx --tsconfig tsconfig.node.json scripts/run-py-solutions.ts",
+    "test": "vitest run",
+    "verify": "npm run typecheck && npm run check:content && npm run check:sql && npm run check:py && npm run test"
+  },
+  "dependencies": {
+    "@duckdb/duckdb-wasm": "1.29.0",
+    "katex": "0.16.11",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "react-router-dom": "7.1.1",
+    "uplot": "1.6.31",
+    "zustand": "5.0.2"
+  },
+  "devDependencies": {
+    "@duckdb/node-api": "1.2.2-alpha.18",
+    "@testing-library/dom": "10.4.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "16.1.0",
+    "@testing-library/user-event": "^14.5.2",
+    "@types/katex": "0.16.7",
+    "@types/node": "22.10.2",
+    "@types/react": "19.0.2",
+    "@types/react-dom": "19.0.2",
+    "@vitejs/plugin-react": "4.3.4",
+    "jsdom": "25.0.1",
+    "pyodide": "0.27.2",
+    "tsx": "4.19.2",
+    "typescript": "5.7.2",
+    "vite": "6.0.5",
+    "vitest": "^3.2.4"
+  }
+}

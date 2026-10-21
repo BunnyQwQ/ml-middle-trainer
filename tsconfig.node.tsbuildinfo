@@ -1,0 +1,1 @@
+{"root":["./scripts/check-content.ts","./scripts/run-py-solutions.ts","./scripts/run-sql-solutions.ts","./vite.config.ts","./vitest.config.ts"],"version":"5.7.2"}

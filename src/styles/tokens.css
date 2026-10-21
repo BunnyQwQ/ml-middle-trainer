@@ -1,0 +1,94 @@
+:root {
+  --bg: #0f1115;
+  --bg-elev: #161a21;
+  --bg-elev-2: #1d222b;
+  --border: #272d38;
+  --border-strong: #38404e;
+  --text: #e8ecf2;
+  --text-dim: #9aa4b2;
+  --text-faint: #6b7483;
+
+  --accent: #6ee7b7;
+  --accent-text: #0f1115;
+  --link: #7dd3fc;
+
+  --ok: #4ade80;
+  --warn: #fbbf24;
+  --bad: #f87171;
+  --info: #7dd3fc;
+  --star: #fbbf24;
+
+  --branch-stats: #7dd3fc;
+  --branch-ab: #c4b5fd;
+  --branch-sql: #6ee7b7;
+  --branch-search-metrics: #fda4af;
+  --branch-metric-picker: #fcd34d;
+  --branch-ads: #f9a8d4;
+  --branch-retrieval: #a5b4fc;
+  --branch-bandits: #86efac;
+  --branch-query-cls: #fdba74;
+  --branch-testing: #93c5fd;
+  --branch-system-design: #d8b4fe;
+  --branch-product: #67e8f9;
+  --branch-boosting: #bef264;
+  --branch-mini: #cbd5e1;
+
+  --grid: #272d38;
+  --series-1: #7dd3fc;
+  --series-2: #fda4af;
+  --series-3: #6ee7b7;
+  --series-4: #fcd34d;
+  --series-5: #c4b5fd;
+
+  --radius: 12px;
+  --radius-sm: 8px;
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 8px 24px rgb(0 0 0 / 0.25);
+  --mono: ui-monospace, 'SF Mono', 'JetBrains Mono', 'Cascadia Code', Consolas, monospace;
+  --sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  --maxw: 980px;
+}
+
+:root[data-theme='light'] {
+  --bg: #f7f8fa;
+  --bg-elev: #ffffff;
+  --bg-elev-2: #f0f2f6;
+  --border: #dfe3ea;
+  --border-strong: #c4cad6;
+  --text: #16191f;
+  --text-dim: #525c6b;
+  --text-faint: #7b858f;
+
+  --accent: #0f766e;
+  --accent-text: #ffffff;
+  --link: #0369a1;
+
+  --ok: #15803d;
+  --warn: #b45309;
+  --bad: #b91c1c;
+  --info: #0369a1;
+  --star: #d97706;
+
+  --branch-stats: #0369a1;
+  --branch-ab: #6d28d9;
+  --branch-sql: #0f766e;
+  --branch-search-metrics: #be123c;
+  --branch-metric-picker: #a16207;
+  --branch-ads: #be185d;
+  --branch-retrieval: #4338ca;
+  --branch-bandits: #15803d;
+  --branch-query-cls: #c2410c;
+  --branch-testing: #1d4ed8;
+  --branch-system-design: #7e22ce;
+  --branch-product: #0e7490;
+  --branch-boosting: #4d7c0f;
+  --branch-mini: #475569;
+
+  --grid: #e2e6ec;
+  --series-1: #0369a1;
+  --series-2: #be123c;
+  --series-3: #0f766e;
+  --series-4: #a16207;
+  --series-5: #6d28d9;
+
+  --shadow: 0 1px 2px rgb(16 24 40 / 0.06), 0 8px 24px rgb(16 24 40 / 0.08);
+}
