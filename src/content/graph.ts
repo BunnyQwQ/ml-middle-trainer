@@ -6,6 +6,18 @@ import { statsCi } from './branches/stats/ci';
 import { abBasics } from './branches/ab/basics';
 import { abPower } from './branches/ab/power';
 import { abAa } from './branches/ab/aa';
+import { sqlBasics } from './branches/sql/basics';
+import { sqlGrouping } from './branches/sql/grouping';
+import { sqlWindows } from './branches/sql/windows';
+import { sqlSessions } from './branches/sql/sessions';
+import { sqlMetrics } from './branches/sql/metrics';
+import { statsHypotheses } from './branches/stats/hypotheses';
+import { statsTests } from './branches/stats/tests';
+import { abPeeking } from './branches/ab/peeking';
+import { abMultiple } from './branches/ab/multiple';
+import { abRatio } from './branches/ab/ratio';
+import { abCuped } from './branches/ab/cuped';
+import { abReview } from './branches/ab/review';
 import type { BranchId, SkillNode } from './types';
 
 /** Every node that exists. Order inside a branch follows `tier`. */
@@ -13,9 +25,21 @@ export const NODES: SkillNode[] = [
   statsDistributions,
   statsClt,
   statsCi,
+  statsHypotheses,
+  statsTests,
   abBasics,
   abPower,
   abAa,
+  abPeeking,
+  abMultiple,
+  abRatio,
+  abCuped,
+  abReview,
+  sqlBasics,
+  sqlGrouping,
+  sqlWindows,
+  sqlSessions,
+  sqlMetrics,
 ];
 
 export const NODE_BY_ID: Record<string, SkillNode> = Object.fromEntries(

@@ -231,7 +231,11 @@ export function wilsonInterval(x: number, n: number, alpha = 0.05): [number, num
   const denom = 1 + (z * z) / n;
   const center = (p + (z * z) / (2 * n)) / denom;
   const half = (z * Math.sqrt((p * (1 - p)) / n + (z * z) / (4 * n * n))) / denom;
-  return [center - half, center + half];
+  // At the edges the bounds are exactly 0 and 1; floating point lands a
+  // fraction of 1e-18 off, which looks like noise in a coverage plot.
+  const lo = x === 0 ? 0 : Math.max(0, center - half);
+  const hi = x === n ? 1 : Math.min(1, center + half);
+  return [lo, hi];
 }
 
 /** t-interval for a mean. */
@@ -318,4 +322,141 @@ export function histogram(
   }
   const centers = counts.map((_, i) => lo + width * (i + 0.5));
   return { centers, counts, width, lo, hi };
+}
+
+/**
+ * Mann-Whitney U with the normal approximation and a tie correction.
+ * This is the test to reach for when the data is skewed and the question is
+ * "does one group tend to be larger", not "are the means equal".
+ */
+export function mannWhitneyU(
+  a: readonly number[],
+  b: readonly number[],
+): { u: number; z: number; pValue: number } {
+  const na = a.length;
+  const nb = b.length;
+  if (na === 0 || nb === 0) return { u: NaN, z: NaN, pValue: NaN };
+
+  const combined = [
+    ...a.map((v) => ({ v, group: 0 })),
+    ...b.map((v) => ({ v, group: 1 })),
+  ].sort((x, y) => x.v - y.v);
+
+  // Average ranks within ties, and collect tie group sizes for the correction.
+  const ranks = new Array<number>(combined.length);
+  const tieSizes: number[] = [];
+  let i = 0;
+  while (i < combined.length) {
+    let j = i;
+    while (j + 1 < combined.length && combined[j + 1].v === combined[i].v) j += 1;
+    const avg = (i + j + 2) / 2; // ranks are 1-based
+    for (let k = i; k <= j; k += 1) ranks[k] = avg;
+    if (j > i) tieSizes.push(j - i + 1);
+    i = j + 1;
+  }
+
+  let rankSumA = 0;
+  combined.forEach((item, idx) => {
+    if (item.group === 0) rankSumA += ranks[idx];
+  });
+
+  const uA = rankSumA - (na * (na + 1)) / 2;
+  const n = na + nb;
+  const meanU = (na * nb) / 2;
+  const tieTerm = tieSizes.reduce((acc, t) => acc + (t * t * t - t), 0);
+  const varU = ((na * nb) / 12) * (n + 1 - tieTerm / (n * (n - 1)));
+  const z = varU > 0 ? (uA - meanU) / Math.sqrt(varU) : 0;
+  return { u: uA, z, pValue: zTestPValue(z) };
+}
+
+/**
+ * Percentile bootstrap confidence interval for an arbitrary statistic.
+ * Deterministic: the caller supplies the generator, so a write-up and the
+ * picture next to it always show the same numbers.
+ */
+export function bootstrapCi(
+  data: readonly number[],
+  statistic: (sample: readonly number[]) => number,
+  options: { b: number; alpha?: number; next: () => number },
+): { lo: number; hi: number; estimates: number[]; point: number } {
+  const { b, alpha = 0.05, next } = options;
+  const n = data.length;
+  const estimates: number[] = [];
+  const sample = new Array<number>(n);
+  for (let r = 0; r < b; r += 1) {
+    for (let i = 0; i < n; i += 1) sample[i] = data[Math.floor(next() * n)];
+    estimates.push(statistic(sample));
+  }
+  const sorted = [...estimates].sort((x, y) => x - y);
+  return {
+    lo: quantile(sorted, alpha / 2),
+    hi: quantile(sorted, 1 - alpha / 2),
+    estimates,
+    point: statistic(data),
+  };
+}
+
+/**
+ * Delta-method standard error of a ratio of sums, clustered by user.
+ * This is what an experiment platform computes for CTR when randomisation is
+ * by user: each user contributes one (numerator, denominator) pair.
+ */
+export function ratioDeltaSe(
+  numerators: readonly number[],
+  denominators: readonly number[],
+): { ratio: number; se: number } {
+  const n = numerators.length;
+  if (n < 2) return { ratio: NaN, se: NaN };
+  const mx = mean(numerators);
+  const my = mean(denominators);
+  const ratio = mx / my;
+  let vx = 0;
+  let vy = 0;
+  let cxy = 0;
+  for (let i = 0; i < n; i += 1) {
+    const dx = numerators[i] - mx;
+    const dy = denominators[i] - my;
+    vx += dx * dx;
+    vy += dy * dy;
+    cxy += dx * dy;
+  }
+  vx /= n - 1;
+  vy /= n - 1;
+  cxy /= n - 1;
+  const varRatio =
+    (vx / (my * my) - (2 * mx * cxy) / (my * my * my) + (mx * mx * vy) / (my * my * my * my)) / n;
+  return { ratio, se: Math.sqrt(Math.max(0, varRatio)) };
+}
+
+/** Benjamini-Hochberg: returns the indices of the rejected hypotheses. */
+export function benjaminiHochberg(pValues: readonly number[], alpha = 0.05): number[] {
+  const m = pValues.length;
+  const order = pValues.map((p, i) => ({ p, i })).sort((a, b) => a.p - b.p);
+  let kMax = -1;
+  for (let k = 0; k < m; k += 1) {
+    if (order[k].p <= ((k + 1) / m) * alpha) kMax = k;
+  }
+  if (kMax < 0) return [];
+  return order.slice(0, kMax + 1).map((o) => o.i);
+}
+
+/** CUPED-adjusted values: y - theta * (x - mean(x)), with the optimal theta. */
+export function cuped(
+  y: readonly number[],
+  x: readonly number[],
+): { adjusted: number[]; theta: number; varianceRatio: number } {
+  const n = y.length;
+  const my = mean(y);
+  const mx = mean(x);
+  let cov = 0;
+  let varX = 0;
+  for (let i = 0; i < n; i += 1) {
+    cov += (y[i] - my) * (x[i] - mx);
+    varX += (x[i] - mx) * (x[i] - mx);
+  }
+  cov /= n - 1;
+  varX /= n - 1;
+  const theta = varX === 0 ? 0 : cov / varX;
+  const adjusted = y.map((v, i) => v - theta * (x[i] - mx));
+  return { adjusted, theta, varianceRatio: variance(adjusted) / variance(y) };
 }

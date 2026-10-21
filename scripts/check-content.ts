@@ -27,7 +27,8 @@ function checkLocalized(label: string, value: unknown) {
     const where = path ? `${label}.${path}` : label;
     if (!pair.ru || pair.ru.trim().length === 0) fail(where, 'empty ru');
     if (!pair.en || pair.en.trim().length === 0) fail(where, 'empty en');
-    if (pair.ru.trim() === pair.en.trim() && pair.ru.trim().length > 25) {
+    // same() marks a value that is meant to read identically in both languages.
+    if (!pair.same && pair.ru.trim() === pair.en.trim() && pair.ru.trim().length > 25) {
       fail(where, 'ru and en are identical, looks like a forgotten translation');
     }
   }

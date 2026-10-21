@@ -39,7 +39,7 @@ export const BRANCHES: Branch[] = [
       'Joins, grouping, window functions, sessions, product metrics.',
     ),
     accent: 'var(--branch-sql)',
-    status: 'planned',
+    status: 'ready',
     stage: 2,
     order: 3,
   },

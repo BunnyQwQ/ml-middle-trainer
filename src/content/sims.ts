@@ -19,6 +19,26 @@ export const SIM_IDS = [
   'aa-test',
   'aa-broken',
   'srm-check',
+  // sql
+  'join-explorer',
+  'ctr-definitions',
+  'window-functions',
+  'position-share',
+  'session-gaps',
+  'ratio-of-sums',
+  // inference
+  'pvalue-distribution',
+  'significance-vs-truth',
+  'test-comparison',
+  'bootstrap-ci',
+  // experiment practice
+  'peeking',
+  'peeking-paths',
+  'multiple-comparisons',
+  'ratio-variance',
+  'cuped',
+  'novelty-effect',
+  'weekday-seasonality',
 ] as const;
 
 export type SimId = (typeof SIM_IDS)[number];

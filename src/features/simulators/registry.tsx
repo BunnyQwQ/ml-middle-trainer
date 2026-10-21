@@ -18,6 +18,29 @@ import {
   RandomizationUnit,
   SrmCheck,
 } from './ab';
+import {
+  CtrDefinitions,
+  JoinExplorer,
+  PositionShare,
+  RatioOfSums,
+  SessionGaps,
+  WindowFunctions,
+} from './sql';
+import {
+  BootstrapCi,
+  PvalueDistribution,
+  SignificanceVsTruth,
+  TestComparison,
+} from './inference';
+import {
+  Cuped,
+  MultipleComparisons,
+  NoveltyEffect,
+  Peeking,
+  PeekingPaths,
+  RatioVariance,
+  WeekdaySeasonality,
+} from './experiments';
 
 /**
  * Content refers to interactives by id; this is the only place that maps an
@@ -39,6 +62,23 @@ export const SIMS: Record<SimId, ComponentType> = {
   'aa-test': AaTest,
   'aa-broken': AaBroken,
   'srm-check': SrmCheck,
+  'join-explorer': JoinExplorer,
+  'ctr-definitions': CtrDefinitions,
+  'window-functions': WindowFunctions,
+  'position-share': PositionShare,
+  'session-gaps': SessionGaps,
+  'ratio-of-sums': RatioOfSums,
+  'pvalue-distribution': PvalueDistribution,
+  'significance-vs-truth': SignificanceVsTruth,
+  'test-comparison': TestComparison,
+  'bootstrap-ci': BootstrapCi,
+  peeking: Peeking,
+  'peeking-paths': PeekingPaths,
+  'multiple-comparisons': MultipleComparisons,
+  'ratio-variance': RatioVariance,
+  cuped: Cuped,
+  'novelty-effect': NoveltyEffect,
+  'weekday-seasonality': WeekdaySeasonality,
 };
 
 export function getSim(id: SimId): ComponentType {
