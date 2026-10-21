@@ -114,7 +114,42 @@ export type FindBugTask = {
   explanation: L;
 };
 
-export type Task = QuizTask | SqlTask | PythonTask | CaseTask | FindBugTask;
+/** One metric in the pool a scenario offers. */
+export type MetricOption = {
+  id: string;
+  label: L;
+  /** The slots where this metric is a defensible answer. */
+  correctFor: Array<MetricSlot>;
+  /** Why it fits, or why it does not. Shown after the answer. */
+  note: L;
+};
+
+export type MetricSlot = 'offline' | 'online' | 'guardrail';
+
+/**
+ * The metric choice trainer: a product scenario, one pool of metrics, and
+ * three slots to fill — offline, online and guardrails.
+ */
+export type MetricPickTask = {
+  kind: 'metric-pick';
+  id: string;
+  /** The product situation, in a few sentences. */
+  scenario: L;
+  /** Short label for the dedicated trainer screen. */
+  area: L;
+  options: MetricOption[];
+  /** How many guardrail metrics the scenario expects. */
+  guardrailCount: number;
+  writeup: L;
+};
+
+export type Task =
+  | QuizTask
+  | SqlTask
+  | PythonTask
+  | CaseTask
+  | FindBugTask
+  | MetricPickTask;
 
 export type Source = { title: string; url: string; note?: L };
 

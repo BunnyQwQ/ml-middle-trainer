@@ -6,7 +6,7 @@
 
 export const SRS_INTERVALS_DAYS = [1, 3, 7, 14] as const;
 
-export type SrsItemKind = 'quiz' | 'sql' | 'python' | 'case' | 'findbug';
+export type SrsItemKind = 'quiz' | 'sql' | 'python' | 'case' | 'findbug' | 'metric-pick';
 
 export type SrsCard = {
   /** Stable id of the question or task. */

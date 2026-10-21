@@ -24,6 +24,9 @@ export function Topbar() {
         <NavLink to="/" end className={navClass}>
           {t(UI.nav.map)}
         </NavLink>
+        <NavLink to="/metrics" className={navClass}>
+          {t(UI.nav.metrics)}
+        </NavLink>
         <NavLink to="/review" className={navClass}>
           {t(UI.nav.review)}
           {due > 0 && <span className="navlink__badge">{due}</span>}

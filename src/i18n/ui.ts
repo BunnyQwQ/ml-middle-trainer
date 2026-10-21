@@ -9,6 +9,7 @@ export const UI = {
   ),
   nav: {
     map: l('Карта', 'Map'),
+    metrics: l('Метрики', 'Metrics'),
     review: l('Повторение', 'Review'),
     dashboard: l('Прогресс', 'Progress'),
     settings: l('Настройки', 'Settings'),
@@ -73,6 +74,8 @@ export const UI = {
     referenceAnswer: l('Эталонный разбор', 'Reference answer'),
     starsEarned: l('Звёзды за узел', 'Stars for this node'),
     taskOf: l('Задача', 'Task'),
+    metricsBreakdown: l('Разбор вариантов', 'Option by option'),
+    metricNotHere: l('Не подходит ни для одного слота', 'Fits none of the slots'),
   },
   verdict: {
     OK: l('OK', 'OK'),
@@ -157,6 +160,18 @@ export const UI = {
     notFound: l('Страница не найдена', 'Page not found'),
     copy: l('Скопировать', 'Copy'),
     copied: l('Скопировано', 'Copied'),
+  },
+  metrics: {
+    title: l('Тренажёр выбора метрики', 'Metric choice trainer'),
+    subtitle: l(
+      'Продуктовый сценарий — и три решения: по чему итерироваться, по чему принимать решение, что не должно сломаться.',
+      'A product scenario and three decisions: what to iterate on, what to decide by, and what must not break.',
+    ),
+    all: l('Все сценарии', 'All scenarios'),
+    solved: l('Разобрано', 'Solved'),
+    fromNode: l('Из узла', 'From node'),
+    empty: l('Сценарии появятся вместе с ветками', 'Scenarios arrive together with the branches'),
+    next: l('Следующий сценарий', 'Next scenario'),
   },
   sim: {
     run: l('Прогнать', 'Run'),

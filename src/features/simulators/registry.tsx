@@ -41,6 +41,17 @@ import {
   RatioVariance,
   WeekdaySeasonality,
 } from './experiments';
+import {
+  DiscountCurves,
+  InterleavingSim,
+  MrrMap,
+  NdcgReorder,
+  OfflineOnline,
+  PositionBias,
+  PrecisionRecallK,
+  RaterAgreement,
+} from './search';
+import { MetricDecomposition } from './product';
 
 /**
  * Content refers to interactives by id; this is the only place that maps an
@@ -79,6 +90,15 @@ export const SIMS: Record<SimId, ComponentType> = {
   cuped: Cuped,
   'novelty-effect': NoveltyEffect,
   'weekday-seasonality': WeekdaySeasonality,
+  'precision-recall-k': PrecisionRecallK,
+  'mrr-map': MrrMap,
+  'ndcg-reorder': NdcgReorder,
+  'discount-curves': DiscountCurves,
+  'position-bias': PositionBias,
+  'rater-agreement': RaterAgreement,
+  'offline-online': OfflineOnline,
+  'interleaving-sim': InterleavingSim,
+  'metric-decomposition': MetricDecomposition,
 };
 
 export function getSim(id: SimId): ComponentType {

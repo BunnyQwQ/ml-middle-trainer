@@ -8,6 +8,7 @@ import { Topbar } from './Topbar';
 import { MapPage } from '@/features/skill-map/MapPage';
 import { NodePage } from '@/features/node-view/NodePage';
 import { ReviewPage } from '@/features/review/ReviewPage';
+import { MetricsPage } from '@/features/metrics/MetricsPage';
 import { DashboardPage } from '@/features/dashboard/DashboardPage';
 import { SettingsPage } from '@/features/settings/SettingsPage';
 
@@ -52,6 +53,7 @@ function Shell() {
           <Routes>
             <Route path="/" element={<MapPage />} />
             <Route path="/node/:nodeId" element={<NodePage />} />
+            <Route path="/metrics" element={<MetricsPage />} />
             <Route path="/review" element={<ReviewPage />} />
             <Route path="/progress" element={<DashboardPage />} />
             <Route path="/settings" element={<SettingsPage />} />

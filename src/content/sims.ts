@@ -39,6 +39,17 @@ export const SIM_IDS = [
   'cuped',
   'novelty-effect',
   'weekday-seasonality',
+  // search quality
+  'precision-recall-k',
+  'mrr-map',
+  'ndcg-reorder',
+  'discount-curves',
+  'position-bias',
+  'rater-agreement',
+  'offline-online',
+  'interleaving-sim',
+  // product metrics
+  'metric-decomposition',
 ] as const;
 
 export type SimId = (typeof SIM_IDS)[number];

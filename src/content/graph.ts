@@ -18,6 +18,14 @@ import { abMultiple } from './branches/ab/multiple';
 import { abRatio } from './branches/ab/ratio';
 import { abCuped } from './branches/ab/cuped';
 import { abReview } from './branches/ab/review';
+import { searchRelevance } from './branches/search/relevance';
+import { searchPrecisionRecall } from './branches/search/precision-recall';
+import { searchRankMetrics } from './branches/search/rank-metrics';
+import { searchNdcg } from './branches/search/ndcg';
+import { searchOfflineOnline } from './branches/search/offline-online';
+import { searchInterleaving } from './branches/search/interleaving';
+import { metricBasics } from './branches/metric-picker/basics';
+import { metricTraps } from './branches/metric-picker/traps';
 import type { BranchId, SkillNode } from './types';
 
 /** Every node that exists. Order inside a branch follows `tier`. */
@@ -40,6 +48,14 @@ export const NODES: SkillNode[] = [
   sqlWindows,
   sqlSessions,
   sqlMetrics,
+  searchRelevance,
+  searchPrecisionRecall,
+  searchRankMetrics,
+  searchNdcg,
+  searchOfflineOnline,
+  searchInterleaving,
+  metricBasics,
+  metricTraps,
 ];
 
 export const NODE_BY_ID: Record<string, SkillNode> = Object.fromEntries(

@@ -170,6 +170,26 @@ function checkTask(node: SkillNode, task: Task) {
       }
       break;
     }
+    case 'metric-pick': {
+      if (task.options.length < 5) fail(where, 'fewer than five metrics in the pool');
+      const ids = new Set(task.options.map((o) => o.id));
+      if (ids.size !== task.options.length) fail(where, 'duplicate option ids');
+      for (const slot of ['offline', 'online'] as const) {
+        const fitting = task.options.filter((o) => o.correctFor.includes(slot));
+        if (fitting.length === 0) fail(where, `no option is valid for the ${slot} slot`);
+        if (fitting.length === task.options.length) {
+          fail(where, `every option is valid for the ${slot} slot, the question is vacuous`);
+        }
+      }
+      const guardrails = task.options.filter((o) => o.correctFor.includes('guardrail'));
+      if (guardrails.length < task.guardrailCount) {
+        fail(where, 'fewer valid guardrails than the task asks the user to pick');
+      }
+      if (task.guardrailCount < 1) fail(where, 'guardrailCount must be at least one');
+      const wrong = task.options.filter((o) => o.correctFor.length === 0);
+      if (wrong.length === 0) fail(where, 'no distractor options at all');
+      break;
+    }
     default: {
       fail(where, `unknown task kind on node ${node.id}`);
     }

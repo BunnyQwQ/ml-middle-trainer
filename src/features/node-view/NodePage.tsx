@@ -14,6 +14,7 @@ import { SqlTaskView } from './SqlTaskView';
 import { PythonTaskView } from './PythonTaskView';
 import { CaseTaskView } from './CaseTaskView';
 import { FindBugTaskView } from './FindBugTaskView';
+import { MetricPickTaskView } from './MetricPickTaskView';
 
 export type TaskResultHandler = (correct: boolean) => void;
 
@@ -212,6 +213,8 @@ function TaskSwitch({ task, onResult }: { task: Task; onResult: TaskResultHandle
       return <CaseTaskView task={task} onResult={onResult} />;
     case 'findbug':
       return <FindBugTaskView task={task} onResult={onResult} />;
+    case 'metric-pick':
+      return <MetricPickTaskView task={task} onResult={onResult} />;
     default:
       return null;
   }
