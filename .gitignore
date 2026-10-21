@@ -6,3 +6,6 @@ public/vendor
 .DS_Store
 .vite
 coverage
+
+# scratch probes
+.probe.ts
