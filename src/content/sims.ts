@@ -50,6 +50,27 @@ export const SIM_IDS = [
   'interleaving-sim',
   // product metrics
   'metric-decomposition',
+  // ads
+  'ecpm-ranking',
+  'auction-sim',
+  'reliability-diagram',
+  'calibration-money',
+  'ad-load',
+  // retrieval
+  'bm25-explorer',
+  'two-stage',
+  'ann-ivf',
+  'ann-hnsw',
+  'pq-quantization',
+  // bandits
+  'epsilon-tradeoff',
+  'bandit-regret',
+  'thompson-posteriors',
+  'nonstationary-bandit',
+  // query classification
+  'imbalance-pr-roc',
+  'macro-micro',
+  'threshold-coverage',
 ] as const;
 
 export type SimId = (typeof SIM_IDS)[number];

@@ -52,6 +52,15 @@ import {
   RaterAgreement,
 } from './search';
 import { MetricDecomposition } from './product';
+import { AdLoad, AuctionSim, CalibrationMoney, EcpmRanking, ReliabilityDiagram } from './ads';
+import { AnnHnsw, AnnIvf, Bm25Explorer, PqQuantization, TwoStage } from './retrieval';
+import {
+  BanditRegret,
+  EpsilonTradeoff,
+  NonstationaryBandit,
+  ThompsonPosteriors,
+} from './bandits';
+import { ImbalancePrRoc, MacroMicro, ThresholdCoverage } from './classification';
 
 /**
  * Content refers to interactives by id; this is the only place that maps an
@@ -99,6 +108,23 @@ export const SIMS: Record<SimId, ComponentType> = {
   'offline-online': OfflineOnline,
   'interleaving-sim': InterleavingSim,
   'metric-decomposition': MetricDecomposition,
+  'ecpm-ranking': EcpmRanking,
+  'auction-sim': AuctionSim,
+  'reliability-diagram': ReliabilityDiagram,
+  'calibration-money': CalibrationMoney,
+  'ad-load': AdLoad,
+  'bm25-explorer': Bm25Explorer,
+  'two-stage': TwoStage,
+  'ann-ivf': AnnIvf,
+  'ann-hnsw': AnnHnsw,
+  'pq-quantization': PqQuantization,
+  'epsilon-tradeoff': EpsilonTradeoff,
+  'bandit-regret': BanditRegret,
+  'thompson-posteriors': ThompsonPosteriors,
+  'nonstationary-bandit': NonstationaryBandit,
+  'imbalance-pr-roc': ImbalancePrRoc,
+  'macro-micro': MacroMicro,
+  'threshold-coverage': ThresholdCoverage,
 };
 
 export function getSim(id: SimId): ComponentType {

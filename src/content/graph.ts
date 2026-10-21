@@ -26,6 +26,19 @@ import { searchOfflineOnline } from './branches/search/offline-online';
 import { searchInterleaving } from './branches/search/interleaving';
 import { metricBasics } from './branches/metric-picker/basics';
 import { metricTraps } from './branches/metric-picker/traps';
+import { adsEcpm } from './branches/ads/ecpm';
+import { adsAuctions } from './branches/ads/auctions';
+import { adsCalibration } from './branches/ads/calibration';
+import { adsRevenueRelevance } from './branches/ads/revenue-relevance';
+import { retrievalBm25 } from './branches/retrieval/bm25';
+import { retrievalEmbeddings } from './branches/retrieval/embeddings';
+import { retrievalAnn } from './branches/retrieval/ann';
+import { banditsBasics } from './branches/bandits/basics';
+import { banditsUcbThompson } from './branches/bandits/ucb-thompson';
+import { banditsPractice } from './branches/bandits/practice';
+import { qclsImbalance } from './branches/query-cls/imbalance';
+import { qclsMulticlass } from './branches/query-cls/multiclass';
+import { qclsThresholds } from './branches/query-cls/thresholds';
 import type { BranchId, SkillNode } from './types';
 
 /** Every node that exists. Order inside a branch follows `tier`. */
@@ -56,6 +69,19 @@ export const NODES: SkillNode[] = [
   searchInterleaving,
   metricBasics,
   metricTraps,
+  adsEcpm,
+  adsAuctions,
+  adsCalibration,
+  adsRevenueRelevance,
+  retrievalBm25,
+  retrievalEmbeddings,
+  retrievalAnn,
+  banditsBasics,
+  banditsUcbThompson,
+  banditsPractice,
+  qclsImbalance,
+  qclsMulticlass,
+  qclsThresholds,
 ];
 
 export const NODE_BY_ID: Record<string, SkillNode> = Object.fromEntries(
