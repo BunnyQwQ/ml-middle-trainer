@@ -39,6 +39,12 @@ import { banditsPractice } from './branches/bandits/practice';
 import { qclsImbalance } from './branches/query-cls/imbalance';
 import { qclsMulticlass } from './branches/query-cls/multiclass';
 import { qclsThresholds } from './branches/query-cls/thresholds';
+import { testingBasics } from './branches/testing/basics';
+import { testingFixtures } from './branches/testing/fixtures';
+import { testingMlPipelines } from './branches/testing/ml-pipelines';
+import { miniMlBugs } from './branches/mini/ml-bugs';
+import { miniDlQuiz } from './branches/mini/dl-quiz';
+import { miniPandas } from './branches/mini/pandas';
 import { bossFirstReport } from './branches/boss/first-report';
 import { bossExperiment } from './branches/boss/experiment';
 import { bossRankingLaunch } from './branches/boss/ranking-launch';
@@ -88,6 +94,12 @@ export const NODES: SkillNode[] = [
   qclsImbalance,
   qclsMulticlass,
   qclsThresholds,
+  testingBasics,
+  testingFixtures,
+  testingMlPipelines,
+  miniMlBugs,
+  miniDlQuiz,
+  miniPandas,
 ];
 
 export const NODE_BY_ID: Record<string, SkillNode> = Object.fromEntries(

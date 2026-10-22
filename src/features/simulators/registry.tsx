@@ -61,6 +61,8 @@ import {
   ThompsonPosteriors,
 } from './bandits';
 import { ImbalancePrRoc, MacroMicro, ThresholdCoverage } from './classification';
+import { DataChecks, FixtureScope, MutationTesting } from './testing';
+import { Activations, InitSymmetry } from './dl';
 
 /**
  * Content refers to interactives by id; this is the only place that maps an
@@ -125,6 +127,11 @@ export const SIMS: Record<SimId, ComponentType> = {
   'imbalance-pr-roc': ImbalancePrRoc,
   'macro-micro': MacroMicro,
   'threshold-coverage': ThresholdCoverage,
+  'mutation-testing': MutationTesting,
+  'fixture-scope': FixtureScope,
+  'data-checks': DataChecks,
+  activations: Activations,
+  'init-symmetry': InitSymmetry,
 };
 
 export function getSim(id: SimId): ComponentType {

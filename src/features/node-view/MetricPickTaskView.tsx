@@ -4,7 +4,7 @@ import { UI } from '@/i18n/ui';
 import { l } from '@/i18n/types';
 import type { MetricPickTask, MetricSlot } from '@/content/types';
 import { Para } from '@/ui/Theory';
-import type { TaskResultHandler } from './NodePage';
+import type { TaskResultHandler } from './TaskSwitch';
 
 /**
  * The metric choice trainer. One pool of metrics, three slots: the offline

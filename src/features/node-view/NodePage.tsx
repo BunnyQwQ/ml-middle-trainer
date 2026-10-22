@@ -9,14 +9,7 @@ import { useProgress } from '@/progress/store';
 import type { SrsItemKind } from '@/progress/srs';
 import { Stars } from '@/ui/controls';
 import { TheoryBody } from '@/ui/Theory';
-import { QuizTaskView } from './QuizTaskView';
-import { SqlTaskView } from './SqlTaskView';
-import { PythonTaskView } from './PythonTaskView';
-import { CaseTaskView } from './CaseTaskView';
-import { FindBugTaskView } from './FindBugTaskView';
-import { MetricPickTaskView } from './MetricPickTaskView';
-
-export type TaskResultHandler = (correct: boolean) => void;
+import { TaskSwitch, type TaskResultHandler } from './TaskSwitch';
 
 export function NodePage() {
   const { nodeId } = useParams();
@@ -199,23 +192,4 @@ function TaskList({ node }: { node: SkillNode }) {
       ))}
     </>
   );
-}
-
-function TaskSwitch({ task, onResult }: { task: Task; onResult: TaskResultHandler }) {
-  switch (task.kind) {
-    case 'quiz':
-      return <QuizTaskView task={task} onResult={onResult} />;
-    case 'sql':
-      return <SqlTaskView task={task} onResult={onResult} />;
-    case 'python':
-      return <PythonTaskView task={task} onResult={onResult} />;
-    case 'case':
-      return <CaseTaskView task={task} onResult={onResult} />;
-    case 'findbug':
-      return <FindBugTaskView task={task} onResult={onResult} />;
-    case 'metric-pick':
-      return <MetricPickTaskView task={task} onResult={onResult} />;
-    default:
-      return null;
-  }
 }

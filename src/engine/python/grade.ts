@@ -1,4 +1,4 @@
-import type { PythonTask } from '@/content/types';
+import type { PythonTask, WriteTestsTask } from '@/content/types';
 import type { Submission, TestOutcome, Verdict } from '../grading/types';
 
 /**
@@ -9,6 +9,7 @@ import type { Submission, TestOutcome, Verdict } from '../grading/types';
 export type PyRunner = (
   code: string,
   phases: Array<{ name: string; source: string }>,
+  packages?: string[],
 ) => Promise<{
   phases: Array<{ name: string; ok: boolean; error?: string; isAssertion?: boolean }>;
   stdout: string;
@@ -41,10 +42,13 @@ export async function gradePython(
     { name: 'sample', source: task.sampleTests },
     { name: 'hidden', source: task.tests },
   ];
+  // A preamble builds whatever the task hands the user: frames, fixtures, imports.
+  const source = task.preamble ? `${task.preamble}
+${userCode}` : userCode;
 
   let run: Awaited<ReturnType<PyRunner>>;
   try {
-    run = await runner(userCode, phases);
+    run = await runner(source, phases, task.packages);
   } catch (err) {
     const timedOut = isPyTimeout(err);
     return {
@@ -87,6 +91,119 @@ export async function gradePython(
     passed,
     total: phases.length,
     stdout: run.stdout,
+    elapsedMs: Date.now() - started,
+  };
+}
+
+
+/* ------------------------------------------------------- writing the tests -- */
+
+/**
+ * Grading a test suite. There is only one honest way to do it: the suite has
+ * to accept the correct implementation and reject every broken one. A suite
+ * that passes everything proves nothing, and the mutants are what say so.
+ */
+export async function gradeWriteTests(
+  task: WriteTestsTask,
+  userTests: string,
+  runner: PyRunner,
+): Promise<Submission> {
+  const started = Date.now();
+  const total = 1 + task.mutants.length;
+
+  if (userTests.trim().length === 0) {
+    return {
+      verdict: 'RE',
+      tests: [],
+      passed: 0,
+      total,
+      engineError: 'empty submission',
+      elapsedMs: 0,
+    };
+  }
+
+  const outcomes: TestOutcome[] = [];
+  const runAgainst = async (code: string) =>
+    runner(code, [{ name: 'tests', source: userTests }]);
+
+  // 1. The suite must pass on the correct implementation.
+  let onReference: Awaited<ReturnType<PyRunner>>;
+  try {
+    onReference = await runAgainst(task.reference);
+  } catch (err) {
+    const timedOut = isPyTimeout(err);
+    return {
+      verdict: timedOut ? 'TL' : 'RE',
+      tests: [{ name: 'reference', hidden: false, verdict: timedOut ? 'TL' : 'RE' }],
+      passed: 0,
+      total,
+      engineError: timedOut ? undefined : err instanceof Error ? err.message : String(err),
+      elapsedMs: Date.now() - started,
+    };
+  }
+
+  if (onReference.userError) {
+    return {
+      verdict: 'RE',
+      tests: [{ name: 'reference', hidden: false, verdict: 'RE', message: onReference.userError }],
+      passed: 0,
+      total,
+      elapsedMs: Date.now() - started,
+    };
+  }
+
+  const refPhase = onReference.phases[0];
+  if (!refPhase || !refPhase.ok) {
+    return {
+      verdict: refPhase?.isAssertion ? 'WA' : 'RE',
+      tests: [
+        {
+          name: 'reference',
+          hidden: false,
+          verdict: refPhase?.isAssertion ? 'WA' : 'RE',
+          message: refPhase?.error,
+        },
+      ],
+      passed: 0,
+      total,
+      stdout: onReference.stdout,
+      elapsedMs: Date.now() - started,
+    };
+  }
+  outcomes.push({ name: 'reference', hidden: false, verdict: 'OK' });
+
+  // 2. Every mutant must be caught: the suite has to fail on it.
+  let survivors = 0;
+  for (const mutant of task.mutants) {
+    let run: Awaited<ReturnType<PyRunner>>;
+    try {
+      run = await runAgainst(mutant.code);
+    } catch (err) {
+      outcomes.push({
+        name: mutant.id,
+        hidden: false,
+        verdict: isPyTimeout(err) ? 'TL' : 'RE',
+      });
+      survivors += 1;
+      continue;
+    }
+    const phase = run.phases[0];
+    // A mutant that crashes the suite still counts as caught: the suite noticed.
+    const caught = Boolean(run.userError) || !phase || !phase.ok;
+    if (caught) {
+      outcomes.push({ name: mutant.id, hidden: false, verdict: 'OK' });
+    } else {
+      survivors += 1;
+      outcomes.push({ name: mutant.id, hidden: false, verdict: 'WA' });
+    }
+  }
+
+  return {
+    verdict: survivors === 0 ? 'OK' : 'WA',
+    tests: outcomes,
+    passed: outcomes.filter((o) => o.verdict === 'OK').length,
+    total,
+    stdout: onReference.stdout,
     elapsedMs: Date.now() - started,
   };
 }

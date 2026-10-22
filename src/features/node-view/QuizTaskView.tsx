@@ -3,7 +3,7 @@ import { useLang } from '@/i18n/LangProvider';
 import { UI } from '@/i18n/ui';
 import type { QuizTask } from '@/content/types';
 import { Para } from '@/ui/Theory';
-import type { TaskResultHandler } from './NodePage';
+import type { TaskResultHandler } from './TaskSwitch';
 
 /** Single choice, multiple choice and numeric answer in one component. */
 export function QuizTaskView({

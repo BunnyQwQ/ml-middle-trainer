@@ -51,10 +51,13 @@ export async function runPython(
   code: string,
   phases: Array<{ name: string; source: string }>,
   timeoutMs = PY_TIME_LIMIT_MS,
+  packages?: string[],
 ): Promise<PyRunResult> {
   const w = getWorker();
   const id = nextId++;
-  const limit = everRan ? timeoutMs : Math.max(timeoutMs, PY_FIRST_RUN_GRACE_MS);
+  // A first run downloads the interpreter; a package adds several megabytes.
+  const needsGrace = !everRan || (packages ?? []).length > 0;
+  const limit = needsGrace ? Math.max(timeoutMs, PY_FIRST_RUN_GRACE_MS) : timeoutMs;
 
   return new Promise<PyRunResult>((resolve, reject) => {
     const timer = setTimeout(() => {
@@ -93,6 +96,6 @@ export async function runPython(
 
     w.addEventListener('message', onMessage);
     w.addEventListener('error', onError);
-    w.postMessage({ id, code, phases });
+    w.postMessage({ id, code, phases, packages });
   });
 }

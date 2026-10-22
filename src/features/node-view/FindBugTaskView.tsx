@@ -3,7 +3,7 @@ import { useLang } from '@/i18n/LangProvider';
 import { UI } from '@/i18n/ui';
 import type { FindBugTask } from '@/content/types';
 import { Para } from '@/ui/Theory';
-import type { TaskResultHandler } from './NodePage';
+import type { TaskResultHandler } from './TaskSwitch';
 
 /** Pick the line, then read why it is the bug. */
 export function FindBugTaskView({

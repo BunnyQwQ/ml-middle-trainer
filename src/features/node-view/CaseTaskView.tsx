@@ -4,7 +4,7 @@ import { UI } from '@/i18n/ui';
 import type { CaseTask } from '@/content/types';
 import { useProgress } from '@/progress/store';
 import { Para } from '@/ui/Theory';
-import type { TaskResultHandler } from './NodePage';
+import type { TaskResultHandler } from './TaskSwitch';
 
 /**
  * Open-answer case: the answer is written first, and only then does the
@@ -18,12 +18,22 @@ export function CaseTaskView({ task, onResult }: { task: CaseTask; onResult: Tas
   const setAnswer = useProgress((s) => s.setAnswer);
   const [revealed, setRevealed] = useState(false);
   const [checked, setChecked] = useState<Record<number, boolean>>({});
+  const [graded, setGraded] = useState<boolean | null>(null);
 
   const wordCount = answer.trim().split(/\s+/).filter(Boolean).length;
 
   function reveal() {
     setRevealed(true);
-    onResult(true);
+  }
+
+  /**
+   * An open answer cannot be graded by a machine, so the grade is the user's
+   * own — and it is a real grade: "missed something" schedules the case for
+   * review tomorrow exactly like a wrong quiz answer.
+   */
+  function grade(covered: boolean) {
+    setGraded(covered);
+    onResult(covered);
   }
 
   const hits = Object.values(checked).filter(Boolean).length;
@@ -75,6 +85,31 @@ export function CaseTaskView({ task, onResult }: { task: CaseTask; onResult: Tas
               </li>
             ))}
           </ul>
+
+          <p className="faint">{t(UI.node.selfGradePrompt)}</p>
+          <div className="row">
+            <button
+              type="button"
+              className={hits * 2 >= task.checklist.length ? 'btn btn--primary' : 'btn'}
+              disabled={graded !== null}
+              onClick={() => grade(true)}
+            >
+              {t(UI.node.selfGradeHit)}
+            </button>
+            <button
+              type="button"
+              className="btn"
+              disabled={graded !== null}
+              onClick={() => grade(false)}
+            >
+              {t(UI.node.selfGradeMiss)}
+            </button>
+            {graded === false && (
+              <span className="pill" style={{ color: 'var(--bad)', borderColor: 'var(--bad)' }}>
+                {t(UI.node.scheduledRepeat)}
+              </span>
+            )}
+          </div>
         </>
       )}
     </>

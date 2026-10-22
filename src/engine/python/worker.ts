@@ -13,6 +13,8 @@ type RunRequest = {
   code: string;
   /** Test scripts to run in order against the module namespace. */
   phases: Array<{ name: string; source: string }>;
+  /** Pyodide packages to load first, e.g. ['pandas']. */
+  packages?: string[];
 };
 
 type PhaseResult = {
@@ -67,8 +69,10 @@ function cleanTraceback(message: string): string {
   return useful.join('\n').trim();
 }
 
+const loadedPackages = new Set<string>();
+
 ctx.onmessage = async (event) => {
-  const { id, code, phases } = event.data;
+  const { id, code, phases, packages } = event.data;
   stdoutBuffer = [];
   let py: Pyodide;
   try {
@@ -81,6 +85,25 @@ ctx.onmessage = async (event) => {
     };
     ctx.postMessage(response);
     return;
+  }
+
+  // Packages are a few megabytes each, so they load once and stay loaded.
+  const missing = (packages ?? []).filter((name) => !loadedPackages.has(name));
+  if (missing.length > 0) {
+    try {
+      await py.loadPackage(missing);
+      for (const name of missing) loadedPackages.add(name);
+    } catch (err) {
+      const response: RunResponse = {
+        id,
+        type: 'engineError',
+        message: `could not load ${missing.join(', ')}: ${
+          err instanceof Error ? err.message : String(err)
+        }`,
+      };
+      ctx.postMessage(response);
+      return;
+    }
   }
 
   const results: PhaseResult[] = [];

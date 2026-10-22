@@ -7,7 +7,7 @@ import { gradePython } from '@/engine/python/grade';
 import type { Submission } from '@/engine/grading/types';
 import { useProgress } from '@/progress/store';
 import { Para } from '@/ui/Theory';
-import type { TaskResultHandler } from './NodePage';
+import type { TaskResultHandler } from './TaskSwitch';
 import { VerdictPanel } from './VerdictPanel';
 
 export function PythonTaskView({
@@ -31,7 +31,9 @@ export function PythonTaskView({
     setRunning(true);
     setSubmission(null);
     try {
-      const result = await gradePython(task, code, (src, phases) => runPython(src, phases));
+      const result = await gradePython(task, code, (src, phases, packages) =>
+        runPython(src, phases, undefined, packages),
+      );
       setSubmission(result);
       onResult(result.verdict === 'OK');
       if (result.verdict === 'OK') setShowWriteup(true);

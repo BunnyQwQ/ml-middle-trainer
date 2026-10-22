@@ -53,8 +53,10 @@ for (const node of NODES) {
   if (node.theory.length === 0) fail(`node ${node.id}`, 'no theory blocks');
   if (node.tasks.length === 0) fail(`node ${node.id}`, 'no tasks');
 
+  // Every lesson node carries at least one interactive. Practice-only nodes
+  // (five tasks or more) are the exception: there the tasks *are* the interactive part.
   const interactives = node.theory.filter((b) => b.type === 'sim').length;
-  if (interactives === 0) {
+  if (interactives === 0 && node.tasks.length < 5) {
     fail(`node ${node.id}`, 'no interactive blocks in the theory');
   }
 
@@ -211,6 +213,22 @@ function checkTask(node: SkillNode, task: Task) {
       if (task.buggyLines.length === 0) fail(where, 'no buggy line marked');
       for (const line of task.buggyLines) {
         if (line < 1 || line > lines) fail(where, `buggy line ${line} outside the code (1..${lines})`);
+      }
+      break;
+    }
+    case 'write-tests': {
+      if (task.mutants.length < 3) fail(where, 'fewer than three mutants to catch');
+      const ids = new Set(task.mutants.map((m) => m.id));
+      if (ids.size !== task.mutants.length) fail(where, 'duplicate mutant ids');
+      if (task.reference.trim().length === 0) fail(where, 'no implementation to test');
+      if (task.referenceTests.trim().length === 0) fail(where, 'no reference test suite');
+      if (normalize(task.starter) === normalize(task.referenceTests)) {
+        fail(where, 'the starter is the reference test suite');
+      }
+      for (const mutant of task.mutants) {
+        if (normalize(mutant.code) === normalize(task.reference)) {
+          fail(where, `mutant ${mutant.id} is identical to the reference`);
+        }
       }
       break;
     }

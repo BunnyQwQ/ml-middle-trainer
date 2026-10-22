@@ -71,6 +71,13 @@ export const SIM_IDS = [
   'imbalance-pr-roc',
   'macro-micro',
   'threshold-coverage',
+  // testing
+  'mutation-testing',
+  'fixture-scope',
+  'data-checks',
+  // deep learning
+  'activations',
+  'init-symmetry',
 ] as const;
 
 export type SimId = (typeof SIM_IDS)[number];

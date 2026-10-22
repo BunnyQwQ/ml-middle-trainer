@@ -88,6 +88,10 @@ export type PythonTask = {
   kind: 'python';
   id: string;
   prompt: L;
+  /** Pyodide packages to load before running, e.g. ['pandas']. */
+  packages?: string[];
+  /** Code run before the user's module: fixtures, sample frames, imports. */
+  preamble?: string;
   /** Function the user must implement, e.g. 'def ctr(clicks, shows):'. */
   signature: string;
   starter: string;
@@ -147,13 +151,33 @@ export type MetricPickTask = {
   writeup: L;
 };
 
+/**
+ * "Write the tests yourself." The submission is a test suite rather than an
+ * implementation, and it is graded the only way a test suite can be: it must
+ * accept the correct code and reject every broken variant.
+ */
+export type WriteTestsTask = {
+  kind: 'write-tests';
+  id: string;
+  prompt: L;
+  /** The implementation the tests must accept. */
+  reference: string;
+  /** Broken variants the tests have to catch, one assertion failure is enough. */
+  mutants: Array<{ id: string; label: L; code: string }>;
+  starter: string;
+  /** A test suite that catches every mutant; shown as the write-up. */
+  referenceTests: string;
+  writeup: L;
+};
+
 export type Task =
   | QuizTask
   | SqlTask
   | PythonTask
   | CaseTask
   | FindBugTask
-  | MetricPickTask;
+  | MetricPickTask
+  | WriteTestsTask;
 
 export type Source = { title: string; url: string; note?: L };
 

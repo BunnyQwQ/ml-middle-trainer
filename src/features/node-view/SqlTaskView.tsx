@@ -7,7 +7,7 @@ import { gradeSql } from '@/engine/sql/grade';
 import type { ResultSet, Submission } from '@/engine/grading/types';
 import { useProgress } from '@/progress/store';
 import { Para } from '@/ui/Theory';
-import type { TaskResultHandler } from './NodePage';
+import type { TaskResultHandler } from './TaskSwitch';
 import { ResultTable, VerdictPanel } from './VerdictPanel';
 
 export function SqlTaskView({ task, onResult }: { task: SqlTask; onResult: TaskResultHandler }) {

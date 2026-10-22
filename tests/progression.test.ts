@@ -111,8 +111,13 @@ describe('side branches and the level bypass', () => {
   const heads = NODES.filter((n) => n.unlockLevel !== undefined);
 
   it('gives every act-four branch a level route', () => {
+    // Derived from the content rather than hard-coded: a new act-four branch
+    // without a level bypass would be reachable only through the trial.
+    const actFour = new Set(
+      NODES.filter((n) => n.act === 4 && !n.boss).map((n) => n.branch),
+    );
     const branches = new Set(heads.map((n) => n.branch));
-    expect(branches).toEqual(new Set(['ads', 'retrieval', 'bandits', 'query-cls']));
+    expect(branches).toEqual(actFour);
   });
 
   it('keeps side branches shut at low level without the trial', () => {
