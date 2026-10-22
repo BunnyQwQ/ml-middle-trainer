@@ -63,6 +63,8 @@ import {
 import { ImbalancePrRoc, MacroMicro, ThresholdCoverage } from './classification';
 import { DataChecks, FixtureScope, MutationTesting } from './testing';
 import { Activations, InitSymmetry } from './dl';
+import { BaselineLadder, ModelDecay, TimeSplit } from './sysdesign';
+import { MoneyBridge, Prioritization } from './money';
 
 /**
  * Content refers to interactives by id; this is the only place that maps an
@@ -132,6 +134,11 @@ export const SIMS: Record<SimId, ComponentType> = {
   'data-checks': DataChecks,
   activations: Activations,
   'init-symmetry': InitSymmetry,
+  'time-split': TimeSplit,
+  'baseline-ladder': BaselineLadder,
+  'model-decay': ModelDecay,
+  'money-bridge': MoneyBridge,
+  prioritization: Prioritization,
 };
 
 export function getSim(id: SimId): ComponentType {

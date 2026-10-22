@@ -48,6 +48,14 @@ import { miniPandas } from './branches/mini/pandas';
 import { bossFirstReport } from './branches/boss/first-report';
 import { bossExperiment } from './branches/boss/experiment';
 import { bossRankingLaunch } from './branches/boss/ranking-launch';
+import { bossProduction } from './branches/boss/production';
+import { bossFinal } from './branches/boss/final';
+import { sysdFraming } from './branches/sysdesign/framing';
+import { sysdData } from './branches/sysdesign/data';
+import { sysdProduction } from './branches/sysdesign/production';
+import { productMetrics } from './branches/product/metrics';
+import { productTradeoffs } from './branches/product/tradeoffs';
+import { productPrioritization } from './branches/product/prioritization';
 import type { Act, BranchId, SkillNode } from './types';
 
 /** Every node that exists. Order inside a branch follows `tier`. */
@@ -55,6 +63,8 @@ export const NODES: SkillNode[] = [
   bossFirstReport,
   bossExperiment,
   bossRankingLaunch,
+  bossProduction,
+  bossFinal,
   statsDistributions,
   statsClt,
   statsCi,
@@ -100,6 +110,12 @@ export const NODES: SkillNode[] = [
   miniMlBugs,
   miniDlQuiz,
   miniPandas,
+  sysdFraming,
+  sysdData,
+  sysdProduction,
+  productMetrics,
+  productTradeoffs,
+  productPrioritization,
 ];
 
 export const NODE_BY_ID: Record<string, SkillNode> = Object.fromEntries(
@@ -127,7 +143,7 @@ export function isNodeDone(progress: ProgressData, nodeId: string): boolean {
   return nodeStars(progress, nodeId) > 0;
 }
 
-export const ACTS: Act[] = [1, 2, 3, 4];
+export const ACTS: Act[] = [1, 2, 3, 4, 5];
 
 /** The boss that closes an act, if the act has one. */
 export function bossOfAct(act: Act): SkillNode | undefined {

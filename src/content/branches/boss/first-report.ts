@@ -7,6 +7,7 @@ export const bossFirstReport: SkillNode = {
   act: 1,
   tier: 1,
   boss: true,
+  contest: { minutes: 40 },
   title: l('Испытание I: первый отчёт', 'Trial I: the first report'),
   blurb: l(
     'Логи, запрос, интервал и честный ответ продакту. Всё из первого акта сразу.',

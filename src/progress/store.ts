@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { storageGet, storageRemove, storageSet } from './storage';
 import { dayIndex, review, type SrsCard, type SrsItemKind } from './srs';
+import { betterRun, finishRun, startRun } from './contest';
 
 export const PROGRESS_KEY = 'mlmt.progress.v1';
 export const PROGRESS_SCHEMA_VERSION = 1;
@@ -20,11 +21,27 @@ export type NodeProgress = {
   startedAt: number;
 };
 
+/** One attempt at a boss contest. Only the best run per boss is kept. */
+export type ContestRun = {
+  nodeId: string;
+  startedAt: number;
+  /** null while the clock is still running. */
+  finishedAt: number | null;
+  solved: number;
+  total: number;
+  /** Wall-clock milliseconds used, capped at the limit. */
+  elapsedMs: number;
+  /** Solved everything before the clock ran out. */
+  passed: boolean;
+};
+
 export type ProgressData = {
   version: number;
   xp: number;
   nodes: Record<string, NodeProgress>;
   srs: Record<string, SrsCard>;
+  /** Contest state per boss: the run in progress and the best finished one. */
+  contests: Record<string, { current: ContestRun | null; best: ContestRun | null }>;
   /** Unsent editor contents, keyed by task id. Survives reloads and language switches. */
   drafts: Record<string, string>;
   /** Free-text answers to case studies. */
@@ -39,6 +56,7 @@ export function emptyProgress(): ProgressData {
     xp: 0,
     nodes: {},
     srs: {},
+    contests: {},
     drafts: {},
     answers: {},
     streak: { lastDay: null, current: 0, best: 0 },
@@ -93,6 +111,8 @@ type Store = {
   ready: boolean;
   hydrate: () => Promise<void>;
   recordAttempt: (input: AttemptInput) => { xpGained: number; stars: 0 | 1 | 2 | 3 };
+  startContest: (nodeId: string, total: number, at?: number) => void;
+  finishContest: (nodeId: string, solved: number, minutes: number, at?: number) => void;
   setDraft: (itemId: string, code: string) => void;
   setAnswer: (itemId: string, text: string) => void;
   touchStreak: (at?: number) => void;
@@ -169,6 +189,29 @@ export const useProgress = create<Store>((set, get) => ({
     set({ data });
     scheduleSave(data);
     return { xpGained, stars };
+  },
+
+  startContest: (nodeId, total, at = Date.now()) => {
+    const data = structuredCloneSafe(get().data);
+    const slot = data.contests[nodeId] ?? { current: null, best: null };
+    slot.current = startRun(nodeId, total, at);
+    data.contests[nodeId] = slot;
+    data.updatedAt = at;
+    set({ data });
+    scheduleSave(data);
+  },
+
+  finishContest: (nodeId, solved, minutes, at = Date.now()) => {
+    const data = structuredCloneSafe(get().data);
+    const slot = data.contests[nodeId] ?? { current: null, best: null };
+    if (!slot.current) return;
+    const done = finishRun(slot.current, solved, minutes, at);
+    slot.best = betterRun(slot.best, done);
+    slot.current = null;
+    data.contests[nodeId] = slot;
+    data.updatedAt = at;
+    set({ data });
+    scheduleSave(data);
   },
 
   setDraft: (itemId, code) => {
@@ -284,6 +327,14 @@ export function migrate(input: unknown): ProgressData {
     }
   }
 
+  if (body.contests && typeof body.contests === 'object') {
+    for (const [id, slot] of Object.entries(body.contests)) {
+      if (!slot || typeof slot !== 'object') continue;
+      const s = slot as Partial<ProgressData['contests'][string]>;
+      out.contests[id] = { current: migrateRun(s.current, id), best: migrateRun(s.best, id) };
+    }
+  }
+
   for (const key of ['drafts', 'answers'] as const) {
     const src = body[key];
     if (src && typeof src === 'object') {
@@ -303,6 +354,21 @@ export function migrate(input: unknown): ProgressData {
   }
 
   return out;
+}
+
+function migrateRun(value: unknown, nodeId: string): ContestRun | null {
+  if (!value || typeof value !== 'object') return null;
+  const r = value as Partial<ContestRun>;
+  if (typeof r.startedAt !== 'number') return null;
+  return {
+    nodeId,
+    startedAt: r.startedAt,
+    finishedAt: typeof r.finishedAt === 'number' ? r.finishedAt : null,
+    solved: numberOr(r.solved, 0),
+    total: numberOr(r.total, 0),
+    elapsedMs: numberOr(r.elapsedMs, 0),
+    passed: Boolean(r.passed),
+  };
 }
 
 function numberOr(value: unknown, fallback: number): number {

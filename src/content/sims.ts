@@ -78,6 +78,13 @@ export const SIM_IDS = [
   // deep learning
   'activations',
   'init-symmetry',
+  // ml system design
+  'time-split',
+  'baseline-ladder',
+  'model-decay',
+  // product thinking
+  'money-bridge',
+  'prioritization',
 ] as const;
 
 export type SimId = (typeof SIM_IDS)[number];

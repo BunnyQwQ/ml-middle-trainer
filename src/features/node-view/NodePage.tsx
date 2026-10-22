@@ -10,6 +10,7 @@ import type { SrsItemKind } from '@/progress/srs';
 import { Stars } from '@/ui/controls';
 import { TheoryBody } from '@/ui/Theory';
 import { TaskSwitch, type TaskResultHandler } from './TaskSwitch';
+import { ContestPanel } from './ContestPanel';
 
 export function NodePage() {
   const { nodeId } = useParams();
@@ -163,6 +164,8 @@ function TaskList({ node }: { node: SkillNode }) {
 
   return (
     <>
+      {node.contest && <ContestPanel node={node} />}
+
       <div className="row" style={{ marginBottom: 12 }}>
         <span className="pill">
           {solvedCount} {t(UI.common.of)} {node.tasks.length}

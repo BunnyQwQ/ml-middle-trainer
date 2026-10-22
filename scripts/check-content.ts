@@ -8,7 +8,7 @@
  */
 import { BRANCHES } from '@/content/branches';
 import { DATASETS } from '@/content/datasets';
-import { NODES } from '@/content/graph';
+import { ACTS, NODES } from '@/content/graph';
 import { SIM_IDS } from '@/content/sims';
 import type { SkillNode, Task } from '@/content/types';
 import { UI, flattenL } from '@/i18n/ui';
@@ -88,7 +88,7 @@ for (const node of NODES) {
 
 /* -------------------------------------------------------------- the bosses -- */
 
-for (const act of [1, 2, 3] as const) {
+for (const act of ACTS) {
   const bosses = NODES.filter((n) => n.boss && n.act === act);
   if (bosses.length === 0) fail('acts', `act ${act} has no boss to close it`);
   if (bosses.length > 1) fail('acts', `act ${act} has ${bosses.length} bosses`);
@@ -293,6 +293,8 @@ const ALLOWED_SOURCE_HOSTS = [
   'scikit-learn.org',
   'pandas.pydata.org',
   'docs.pytest.org',
+  // Martin Zinkevich, "Rules of Machine Learning" — opened and read before adding.
+  'developers.google.com',
 ];
 
 for (const node of NODES) {

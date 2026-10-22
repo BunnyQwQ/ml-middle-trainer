@@ -47,6 +47,7 @@ export const UI = {
       l('Акт II — Эксперименты', 'Act II — Experiments'),
       l('Акт III — Качество и решения', 'Act III — Quality and decisions'),
       l('Акт IV — Специализации', 'Act IV — Specialisations'),
+      l('Акт V — Инженер целиком', 'Act V — The whole engineer'),
     ],
     actBlurbs: [
       l(
@@ -64,6 +65,10 @@ export const UI = {
       l(
         'Отдельные области: реклама, retrieval, бандиты, классификация запросов.',
         'Separate areas: ads, retrieval, bandits, query classification.',
+      ),
+      l(
+        'Собрать всё вместе: дизайн ML-системы и продуктовые решения вокруг неё.',
+        'Putting it together: designing an ML system and the product decisions around it.',
       ),
     ],
     boss: l('Испытание', 'Trial'),
@@ -146,6 +151,31 @@ export const UI = {
     engineFailed: l(
       'Не удалось загрузить движок. Проверь подключение к сети.',
       'Could not load the engine. Check your network connection.',
+    ),
+  },
+  contest: {
+    title: l('Испытание на время', 'A timed trial'),
+    rules: l(
+      'Задания смешанные и собраны из всего, что было до этого: запрос, код, выбор метрики, разбор. Часы идут с момента старта и не останавливаются, если закрыть вкладку. Цель не в скорости ради скорости: на собеседовании и в работе ценится не способность решить это за выходные, а способность узнать задачу и не растеряться.',
+      'The tasks are mixed and drawn from everything before them: a query, some code, a metric choice, a judgement call. The clock starts when you start it and does not stop if you close the tab. The point is not speed for its own sake: what counts in an interview and at work is not solving this over a weekend but recognising the problem and not freezing.',
+    ),
+    againHint: l(
+      'Попытки не ограничены, сохраняется лучшая: сначала по числу решённых, при равенстве — по времени.',
+      'Attempts are unlimited and the best one is kept: by tasks solved first, by time on a tie.',
+    ),
+    partialHint: l(
+      'Испытание засчитано частично. Узел уже открыт, но попробовать уложиться целиком стоит — именно этот режим ближе всего к секции кодирования на собеседовании.',
+      'The trial counts as partial. The node is open already, but closing it in full is worth another go — this mode is the closest thing here to the coding section of an interview.',
+    ),
+    start: l('Запустить часы', 'Start the clock'),
+    restart: l('Ещё попытка', 'Another attempt'),
+    submit: l('Сдать', 'Submit'),
+    minutes: l('мин', 'min'),
+    tasks: l('заданий', 'tasks'),
+    best: l('Лучшая попытка', 'Best attempt'),
+    liveHint: l(
+      'Время идёт. Решай в любом порядке; «Сдать» фиксирует результат досрочно.',
+      'The clock is running. Solve in any order; "Submit" records the result early.',
     ),
   },
   review: {

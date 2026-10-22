@@ -110,6 +110,13 @@ export function CaseTaskView({ task, onResult }: { task: CaseTask; onResult: Tas
               </span>
             )}
           </div>
+
+          {task.writeup && graded !== null && (
+            <>
+              <h3 className="h2">{t(UI.node.writeup)}</h3>
+              <Para value={task.writeup} />
+            </>
+          )}
         </>
       )}
     </>

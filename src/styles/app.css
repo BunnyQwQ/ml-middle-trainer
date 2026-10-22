@@ -1157,3 +1157,28 @@ table.data th.num {
     animation: none !important;
   }
 }
+
+/* ------------------------------------------------------------- contests -- */
+
+.contest {
+  border-color: var(--star);
+}
+
+.contest--live {
+  position: sticky;
+  top: 8px;
+  z-index: 5;
+  background: var(--bg-elev-2);
+  box-shadow: 0 6px 24px rgb(0 0 0 / 25%);
+}
+
+.contest__clock {
+  font-family: var(--mono);
+  font-size: 28px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+
+.contest__clock--tight {
+  color: var(--bad);
+}

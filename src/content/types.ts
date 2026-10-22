@@ -19,7 +19,7 @@ export type BranchId =
   | 'boss';
 
 /** Acts run in order; everything inside one act is open in parallel. */
-export type Act = 1 | 2 | 3 | 4;
+export type Act = 1 | 2 | 3 | 4 | 5;
 
 export type Branch = {
   id: BranchId;
@@ -109,6 +109,11 @@ export type CaseTask = {
   prompt: L;
   reference: L;
   checklist: L[];
+  /**
+   * What separates a strong answer from a weak one. Shown under the checklist,
+   * after the self-grade, so it comments on the attempt rather than leading it.
+   */
+  writeup?: L;
 };
 
 export type FindBugTask = {
@@ -203,6 +208,13 @@ export type SkillNode = {
   unlockLevel?: number;
   /** A gate between acts: mixed, practical, draws on everything before it. */
   boss?: boolean;
+  /**
+   * Bosses run as a contest: the tasks are mixed by design, and the clock is
+   * the point — a middle engineer is not someone who can solve these given a
+   * weekend, but someone who recognises them. Practice mode stays available
+   * after the clock runs out, it just does not count as a contest run.
+   */
+  contest?: { minutes: number };
   theory: TheoryBlock[];
   tasks: Task[];
   sources?: Source[];

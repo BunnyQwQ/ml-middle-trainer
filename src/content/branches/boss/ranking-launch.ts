@@ -7,6 +7,7 @@ export const bossRankingLaunch: SkillNode = {
   act: 3,
   tier: 3,
   boss: true,
+  contest: { minutes: 50 },
   title: l('Испытание III: запуск ранжирования', 'Trial III: launching a ranker'),
   blurb: l(
     'Выбрать метрики, измерить качество по логам, решить между интерливингом и A/B.',

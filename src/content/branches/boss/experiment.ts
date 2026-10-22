@@ -7,6 +7,7 @@ export const bossExperiment: SkillNode = {
   act: 2,
   tier: 2,
   boss: true,
+  contest: { minutes: 45 },
   title: l('Испытание II: эксперимент целиком', 'Trial II: the whole experiment'),
   blurb: l(
     'От сырых логов до решения: сплит, метрики, корректная дисперсия и вердикт.',
