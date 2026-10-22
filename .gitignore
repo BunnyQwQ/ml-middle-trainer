@@ -9,3 +9,6 @@ coverage
 
 # scratch probes
 .probe.ts
+
+# build caches
+*.tsbuildinfo
