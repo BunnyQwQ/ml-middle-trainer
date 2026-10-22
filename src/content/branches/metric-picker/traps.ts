@@ -4,6 +4,7 @@ import type { SkillNode } from '@/content/types';
 export const metricTraps: SkillNode = {
   id: 'metric.traps',
   branch: 'metric-picker',
+  act: 3,
   tier: 2,
   title: l('Метрики-ловушки', 'Metrics that trap you'),
   blurb: l(

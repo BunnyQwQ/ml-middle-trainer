@@ -4,6 +4,7 @@ import type { SkillNode } from '@/content/types';
 export const statsTests: SkillNode = {
   id: 'stats.tests',
   branch: 'stats',
+  act: 2,
   tier: 5,
   title: l('Какой критерий когда', 'Which test, when'),
   blurb: l(

@@ -4,13 +4,14 @@ import type { SkillNode } from '@/content/types';
 export const sqlWindows: SkillNode = {
   id: 'sql.windows',
   branch: 'sql',
+  act: 2,
   tier: 3,
   title: l('Оконные функции', 'Window functions'),
   blurb: l(
     'Считать по группе, но не схлопывать строки: топ-N, доли и сравнение с соседом.',
     'Aggregate over a group without collapsing rows: top-N, shares and comparisons with the neighbour.',
   ),
-  requires: ['sql.grouping'],
+  requires: ['boss.first-report'],
   theory: [
     {
       type: 'p',

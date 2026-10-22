@@ -4,13 +4,14 @@ import type { SkillNode } from '@/content/types';
 export const abBasics: SkillNode = {
   id: 'ab.basics',
   branch: 'ab',
+  act: 2,
   tier: 1,
   title: l('Единица рандомизации и единица анализа', 'Unit of randomisation and unit of analysis'),
   blurb: l(
     'Самая частая причина, по которой значимый результат не воспроизводится.',
     'The most common reason a significant result fails to reproduce.',
   ),
-  requires: ['stats.distributions'],
+  requires: ['boss.first-report'],
   theory: [
     {
       type: 'p',

@@ -4,6 +4,7 @@ import type { SkillNode } from '@/content/types';
 export const statsClt: SkillNode = {
   id: 'stats.clt',
   branch: 'stats',
+  act: 1,
   tier: 2,
   title: l('Центральная предельная теорема', 'The central limit theorem'),
   blurb: l(

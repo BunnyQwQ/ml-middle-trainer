@@ -15,7 +15,11 @@ export type BranchId =
   | 'system-design'
   | 'product'
   | 'boosting'
-  | 'mini';
+  | 'mini'
+  | 'boss';
+
+/** Acts run in order; everything inside one act is open in parallel. */
+export type Act = 1 | 2 | 3 | 4;
 
 export type Branch = {
   id: BranchId;
@@ -156,13 +160,24 @@ export type Source = { title: string; url: string; note?: L };
 export type SkillNode = {
   id: string;
   branch: BranchId;
+  /**
+   * Which act the node belongs to. Acts are strictly ordered and separated by
+   * boss nodes, so an act is the unit of "what is open right now".
+   */
+  act: Act;
   /** Depth inside the branch; drives the map layout. */
   tier: number;
   title: L;
   blurb: L;
   /** Node ids that must be completed first. */
   requires: string[];
-  /** Timed mixed contest at the end of a branch. */
+  /**
+   * An escape hatch for side branches: reaching this level opens the node even
+   * if its prerequisites are unfinished. Lets a motivated reader peek ahead
+   * without dismantling the main sequence.
+   */
+  unlockLevel?: number;
+  /** A gate between acts: mixed, practical, draws on everything before it. */
   boss?: boolean;
   theory: TheoryBlock[];
   tasks: Task[];

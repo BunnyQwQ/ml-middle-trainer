@@ -8,6 +8,18 @@ import type { Branch } from './types';
  */
 export const BRANCHES: Branch[] = [
   {
+    id: 'boss',
+    title: l('Испытания', 'Trials'),
+    blurb: l(
+      'Большие практические задания на стыке веток. Каждое закрывает акт и открывает следующий.',
+      'Large practical assignments at the junction of branches. Each one closes an act and opens the next.',
+    ),
+    accent: 'var(--star)',
+    status: 'ready',
+    stage: 1,
+    order: 0,
+  },
+  {
     id: 'stats',
     title: l('Статистика с нуля', 'Statistics from scratch'),
     blurb: l(

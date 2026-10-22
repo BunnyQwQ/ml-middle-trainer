@@ -4,13 +4,15 @@ import type { SkillNode } from '@/content/types';
 export const banditsBasics: SkillNode = {
   id: 'bandits.basics',
   branch: 'bandits',
+  act: 4,
   tier: 1,
   title: l('Исследование и эксплуатация', 'Exploration and exploitation'),
   blurb: l(
     'Задача про выбор, в которой сбор информации стоит денег.',
     'A choice problem where gathering information costs money.',
   ),
-  requires: [],
+  requires: ['boss.ranking-launch'],
+  unlockLevel: 7,
   theory: [
     {
       type: 'p',

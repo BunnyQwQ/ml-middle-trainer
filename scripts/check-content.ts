@@ -69,7 +69,51 @@ for (const node of NODES) {
 
 for (const node of NODES) {
   for (const req of node.requires) {
-    if (!seenNodes.has(req)) fail(`node ${node.id}`, `prerequisite ${req} does not exist`);
+    if (!seenNodes.has(req)) {
+      fail(`node ${node.id}`, `prerequisite ${req} does not exist`);
+      continue;
+    }
+    const prior = NODES.find((n) => n.id === req);
+    // The sequence only holds if nothing depends on a later act.
+    if (prior && prior.act > node.act) {
+      fail(`node ${node.id}`, `prerequisite ${req} lives in a later act (${prior.act} > ${node.act})`);
+    }
+  }
+  if (node.unlockLevel !== undefined && node.requires.length === 0) {
+    fail(`node ${node.id}`, 'unlockLevel on a node that has no prerequisites to bypass');
+  }
+}
+
+/* -------------------------------------------------------------- the bosses -- */
+
+for (const act of [1, 2, 3] as const) {
+  const bosses = NODES.filter((n) => n.boss && n.act === act);
+  if (bosses.length === 0) fail('acts', `act ${act} has no boss to close it`);
+  if (bosses.length > 1) fail('acts', `act ${act} has ${bosses.length} bosses`);
+}
+
+for (const node of NODES.filter((n) => n.boss)) {
+  const where = `boss ${node.id}`;
+  if (node.branch !== 'boss') fail(where, 'a boss must live in the boss branch');
+  if (node.tasks.length < 3) fail(where, 'a boss needs at least three tasks');
+  const branchesPulled = new Set(
+    node.requires.map((r) => NODES.find((n) => n.id === r)?.branch).filter(Boolean),
+  );
+  if (branchesPulled.size < 2) {
+    fail(where, 'a boss must draw its prerequisites from at least two branches');
+  }
+  const kinds = new Set(node.tasks.map((t) => t.kind));
+  if (kinds.size < 3) fail(where, 'a boss should mix at least three task kinds');
+}
+
+// Nodes that open an act must depend on the previous act's boss (or be first).
+for (const node of NODES.filter((n) => !n.boss && n.act > 1)) {
+  const sameActPrereq = node.requires.some(
+    (r) => NODES.find((n) => n.id === r)?.act === node.act,
+  );
+  const gatedByBoss = node.requires.some((r) => NODES.find((n) => n.id === r)?.boss);
+  if (!sameActPrereq && !gatedByBoss) {
+    fail(`node ${node.id}`, 'starts an act without depending on the previous act boss');
   }
 }
 

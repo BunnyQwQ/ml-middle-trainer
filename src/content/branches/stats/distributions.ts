@@ -4,6 +4,7 @@ import type { SkillNode } from '@/content/types';
 export const statsDistributions: SkillNode = {
   id: 'stats.distributions',
   branch: 'stats',
+  act: 1,
   tier: 1,
   title: l('Распределения и выборочный шум', 'Distributions and sampling noise'),
   blurb: l(

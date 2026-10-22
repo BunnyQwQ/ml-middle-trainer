@@ -4,6 +4,7 @@ import type { SkillNode } from '@/content/types';
 export const adsRevenueRelevance: SkillNode = {
   id: 'ads.revenue-relevance',
   branch: 'ads',
+  act: 4,
   tier: 4,
   title: l('Выручка против релевантности', 'Revenue versus relevance'),
   blurb: l(

@@ -4,13 +4,14 @@ import type { SkillNode } from '@/content/types';
 export const searchRelevance: SkillNode = {
   id: 'search.relevance',
   branch: 'search-metrics',
+  act: 3,
   tier: 1,
   title: l('Релевантность и разметка', 'Relevance and labelling'),
   blurb: l(
     'Откуда вообще берётся «правильный ответ», по которому меряют поиск.',
     'Where the "right answer" that search is measured against actually comes from.',
   ),
-  requires: [],
+  requires: ['boss.experiment'],
   theory: [
     {
       type: 'p',

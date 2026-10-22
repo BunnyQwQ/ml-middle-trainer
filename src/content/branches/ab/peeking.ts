@@ -4,13 +4,14 @@ import type { SkillNode } from '@/content/types';
 export const abPeeking: SkillNode = {
   id: 'ab.peeking',
   branch: 'ab',
+  act: 3,
   tier: 4,
   title: l('Подглядывание', 'Peeking'),
   blurb: l(
     'Почему «посмотрим и остановим, когда станет значимо» ломает эксперимент.',
     'Why "we will watch and stop when it goes significant" breaks the experiment.',
   ),
-  requires: ['ab.aa'],
+  requires: ['boss.experiment'],
   theory: [
     {
       type: 'p',

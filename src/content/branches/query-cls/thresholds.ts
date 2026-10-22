@@ -4,6 +4,7 @@ import type { SkillNode } from '@/content/types';
 export const qclsThresholds: SkillNode = {
   id: 'qcls.thresholds',
   branch: 'query-cls',
+  act: 4,
   tier: 3,
   title: l('Пороги, отказы и длинный хвост', 'Thresholds, abstentions and the long tail'),
   blurb: l(

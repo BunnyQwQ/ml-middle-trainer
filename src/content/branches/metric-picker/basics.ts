@@ -4,13 +4,14 @@ import type { SkillNode } from '@/content/types';
 export const metricBasics: SkillNode = {
   id: 'metric.basics',
   branch: 'metric-picker',
+  act: 3,
   tier: 1,
   title: l('Три роли метрики', 'The three roles of a metric'),
   blurb: l(
     'Оффлайн — чтобы итерироваться, онлайн — чтобы решать, guardrail — чтобы не сломать.',
     'Offline to iterate, online to decide, guardrails so nothing breaks.',
   ),
-  requires: [],
+  requires: ['boss.experiment'],
   theory: [
     {
       type: 'p',

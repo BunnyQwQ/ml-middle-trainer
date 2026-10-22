@@ -4,6 +4,7 @@ import type { SkillNode } from '@/content/types';
 export const adsCalibration: SkillNode = {
   id: 'ads.calibration',
   branch: 'ads',
+  act: 4,
   tier: 3,
   title: l('Калибровка pCTR', 'pCTR calibration'),
   blurb: l(

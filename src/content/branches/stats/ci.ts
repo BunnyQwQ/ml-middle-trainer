@@ -4,6 +4,7 @@ import type { SkillNode } from '@/content/types';
 export const statsCi: SkillNode = {
   id: 'stats.ci',
   branch: 'stats',
+  act: 1,
   tier: 3,
   title: l('Доверительные интервалы', 'Confidence intervals'),
   blurb: l(

@@ -4,6 +4,7 @@ import type { SkillNode } from '@/content/types';
 export const abRatio: SkillNode = {
   id: 'ab.ratio',
   branch: 'ab',
+  act: 3,
   tier: 6,
   title: l('Ratio-метрики', 'Ratio metrics'),
   blurb: l(

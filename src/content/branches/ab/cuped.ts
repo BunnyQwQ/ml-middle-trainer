@@ -4,6 +4,7 @@ import type { SkillNode } from '@/content/types';
 export const abCuped: SkillNode = {
   id: 'ab.cuped',
   branch: 'ab',
+  act: 3,
   tier: 7,
   title: l('CUPED и снижение дисперсии', 'CUPED and variance reduction'),
   blurb: l(

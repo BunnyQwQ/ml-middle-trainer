@@ -4,6 +4,7 @@ import type { SkillNode } from '@/content/types';
 export const qclsMulticlass: SkillNode = {
   id: 'qcls.multiclass',
   branch: 'query-cls',
+  act: 4,
   tier: 2,
   title: l('Macro и micro F1', 'Macro and micro F1'),
   blurb: l(

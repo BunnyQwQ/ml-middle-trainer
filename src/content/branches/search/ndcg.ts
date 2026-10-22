@@ -4,6 +4,7 @@ import type { SkillNode } from '@/content/types';
 export const searchNdcg: SkillNode = {
   id: 'search.ndcg',
   branch: 'search-metrics',
+  act: 3,
   tier: 4,
   title: l('DCG и nDCG', 'DCG and nDCG'),
   blurb: l(

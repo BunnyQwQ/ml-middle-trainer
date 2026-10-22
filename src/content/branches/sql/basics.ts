@@ -4,6 +4,7 @@ import type { SkillNode } from '@/content/types';
 export const sqlBasics: SkillNode = {
   id: 'sql.basics',
   branch: 'sql',
+  act: 1,
   tier: 1,
   title: l('Выборки и джойны', 'Selects and joins'),
   blurb: l(

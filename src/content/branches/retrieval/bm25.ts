@@ -4,13 +4,15 @@ import type { SkillNode } from '@/content/types';
 export const retrievalBm25: SkillNode = {
   id: 'retrieval.bm25',
   branch: 'retrieval',
+  act: 4,
   tier: 1,
   title: l('Инвертированный индекс и BM25', 'The inverted index and BM25'),
   blurb: l(
     'Базовая линия, которую новые модели обязаны обыграть — и обыгрывают не всегда.',
     'The baseline new models are supposed to beat — and do not always.',
   ),
-  requires: [],
+  requires: ['boss.ranking-launch'],
+  unlockLevel: 6,
   theory: [
     {
       type: 'p',

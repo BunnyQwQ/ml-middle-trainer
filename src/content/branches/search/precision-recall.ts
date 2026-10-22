@@ -4,6 +4,7 @@ import type { SkillNode } from '@/content/types';
 export const searchPrecisionRecall: SkillNode = {
   id: 'search.precision-recall',
   branch: 'search-metrics',
+  act: 3,
   tier: 2,
   title: l('precision@k и recall@k', 'precision@k and recall@k'),
   blurb: l(

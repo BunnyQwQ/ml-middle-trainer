@@ -4,13 +4,14 @@ import type { SkillNode } from '@/content/types';
 export const abPower: SkillNode = {
   id: 'ab.power',
   branch: 'ab',
+  act: 2,
   tier: 2,
   title: l('Мощность и MDE', 'Power and MDE'),
   blurb: l(
     'Сколько трафика нужно и какой эффект ты вообще способен увидеть.',
     'How much traffic you need and what effect you are able to see at all.',
   ),
-  requires: ['ab.basics', 'stats.ci'],
+  requires: ['ab.basics'],
   theory: [
     {
       type: 'p',

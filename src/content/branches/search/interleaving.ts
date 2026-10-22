@@ -4,6 +4,7 @@ import type { SkillNode } from '@/content/types';
 export const searchInterleaving: SkillNode = {
   id: 'search.interleaving',
   branch: 'search-metrics',
+  act: 3,
   tier: 6,
   title: l('Интерливинг', 'Interleaving'),
   blurb: l(

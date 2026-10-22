@@ -4,6 +4,7 @@ import type { SkillNode } from '@/content/types';
 export const sqlGrouping: SkillNode = {
   id: 'sql.grouping',
   branch: 'sql',
+  act: 1,
   tier: 2,
   title: l('Группировки и агрегаты', 'Grouping and aggregates'),
   blurb: l(

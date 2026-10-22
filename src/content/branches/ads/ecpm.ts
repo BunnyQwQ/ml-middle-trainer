@@ -4,13 +4,15 @@ import type { SkillNode } from '@/content/types';
 export const adsEcpm: SkillNode = {
   id: 'ads.ecpm',
   branch: 'ads',
+  act: 4,
   tier: 1,
   title: l('eCPM и ранжирование рекламы', 'eCPM and ad ranking'),
   blurb: l(
     'Почему наверх идёт не тот, кто больше заплатил.',
     'Why the top slot does not go to whoever pays most.',
   ),
-  requires: [],
+  requires: ['boss.ranking-launch'],
+  unlockLevel: 6,
   theory: [
     {
       type: 'p',

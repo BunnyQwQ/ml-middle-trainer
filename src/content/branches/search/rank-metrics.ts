@@ -4,6 +4,7 @@ import type { SkillNode } from '@/content/types';
 export const searchRankMetrics: SkillNode = {
   id: 'search.rank-metrics',
   branch: 'search-metrics',
+  act: 3,
   tier: 3,
   title: l('MRR и MAP', 'MRR and MAP'),
   blurb: l(

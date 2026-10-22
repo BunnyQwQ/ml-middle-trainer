@@ -4,13 +4,14 @@ import type { SkillNode } from '@/content/types';
 export const statsHypotheses: SkillNode = {
   id: 'stats.hypotheses',
   branch: 'stats',
+  act: 2,
   tier: 4,
   title: l('Гипотезы и p-value', 'Hypotheses and p-values'),
   blurb: l(
     'Что именно утверждает «статистически значимо» — и чего не утверждает.',
     'What "statistically significant" actually claims, and what it does not.',
   ),
-  requires: ['stats.ci'],
+  requires: ['boss.first-report'],
   theory: [
     {
       type: 'p',

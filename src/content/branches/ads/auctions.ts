@@ -4,6 +4,7 @@ import type { SkillNode } from '@/content/types';
 export const adsAuctions: SkillNode = {
   id: 'ads.auctions',
   branch: 'ads',
+  act: 4,
   tier: 2,
   title: l('Аукционы GSP и VCG', 'GSP and VCG auctions'),
   blurb: l(

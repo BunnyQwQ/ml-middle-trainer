@@ -4,6 +4,7 @@ import type { SkillNode } from '@/content/types';
 export const abAa: SkillNode = {
   id: 'ab.aa',
   branch: 'ab',
+  act: 2,
   tier: 3,
   title: l('A/A-тесты и проверка сплитовалки', 'A/A tests and checking the splitter'),
   blurb: l(

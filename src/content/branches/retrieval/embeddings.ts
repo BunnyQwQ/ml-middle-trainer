@@ -4,6 +4,7 @@ import type { SkillNode } from '@/content/types';
 export const retrievalEmbeddings: SkillNode = {
   id: 'retrieval.embeddings',
   branch: 'retrieval',
+  act: 4,
   tier: 2,
   title: l('Эмбеддинги и двухстадийная схема', 'Embeddings and the two-stage setup'),
   blurb: l(

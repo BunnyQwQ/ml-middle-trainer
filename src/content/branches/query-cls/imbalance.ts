@@ -4,13 +4,15 @@ import type { SkillNode } from '@/content/types';
 export const qclsImbalance: SkillNode = {
   id: 'qcls.imbalance',
   branch: 'query-cls',
+  act: 4,
   tier: 1,
   title: l('Дисбаланс классов', 'Class imbalance'),
   blurb: l(
     'Почему ROC AUC выглядит прекрасно там, где модель бесполезна.',
     'Why ROC AUC looks wonderful where the model is useless.',
   ),
-  requires: [],
+  requires: ['boss.ranking-launch'],
+  unlockLevel: 7,
   theory: [
     {
       type: 'p',

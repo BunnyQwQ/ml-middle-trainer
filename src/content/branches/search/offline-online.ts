@@ -4,6 +4,7 @@ import type { SkillNode } from '@/content/types';
 export const searchOfflineOnline: SkillNode = {
   id: 'search.offline-online',
   branch: 'search-metrics',
+  act: 3,
   tier: 5,
   title: l('Оффлайн против онлайна', 'Offline versus online'),
   blurb: l(

@@ -1,4 +1,4 @@
-import type { ProgressData } from '@/progress/store';
+import { levelFor, type ProgressData } from '@/progress/store';
 import { BRANCHES } from './branches';
 import { statsDistributions } from './branches/stats/distributions';
 import { statsClt } from './branches/stats/clt';
@@ -39,10 +39,16 @@ import { banditsPractice } from './branches/bandits/practice';
 import { qclsImbalance } from './branches/query-cls/imbalance';
 import { qclsMulticlass } from './branches/query-cls/multiclass';
 import { qclsThresholds } from './branches/query-cls/thresholds';
-import type { BranchId, SkillNode } from './types';
+import { bossFirstReport } from './branches/boss/first-report';
+import { bossExperiment } from './branches/boss/experiment';
+import { bossRankingLaunch } from './branches/boss/ranking-launch';
+import type { Act, BranchId, SkillNode } from './types';
 
 /** Every node that exists. Order inside a branch follows `tier`. */
 export const NODES: SkillNode[] = [
+  bossFirstReport,
+  bossExperiment,
+  bossRankingLaunch,
   statsDistributions,
   statsClt,
   statsCi,
@@ -109,9 +115,51 @@ export function isNodeDone(progress: ProgressData, nodeId: string): boolean {
   return nodeStars(progress, nodeId) > 0;
 }
 
-/** A node opens once every prerequisite has at least one star. */
+export const ACTS: Act[] = [1, 2, 3, 4];
+
+/** The boss that closes an act, if the act has one. */
+export function bossOfAct(act: Act): SkillNode | undefined {
+  return NODES.find((n) => n.boss && n.act === act);
+}
+
+export function nodesOfAct(act: Act): SkillNode[] {
+  return NODES.filter((n) => n.act === act && !n.boss);
+}
+
+/**
+ * A node opens when every prerequisite is done. Side branches carry an
+ * unlockLevel as a second, independent route: grinding the earlier acts opens
+ * them ahead of schedule, so the sequence guides without trapping.
+ */
 export function isUnlocked(progress: ProgressData, node: SkillNode): boolean {
-  return node.requires.every((req) => isNodeDone(progress, req));
+  if (node.requires.every((req) => isNodeDone(progress, req))) return true;
+  if (node.unlockLevel === undefined) return false;
+  return levelFor(progress.xp).level >= node.unlockLevel;
+}
+
+export type LockReason =
+  | { kind: 'open' }
+  | { kind: 'prereq'; missing: SkillNode[]; alsoLevel?: number }
+  | { kind: 'level'; need: number };
+
+/** Why a node is closed, so the map can say it in words. */
+export function lockReason(progress: ProgressData, node: SkillNode): LockReason {
+  if (isUnlocked(progress, node)) return { kind: 'open' };
+  const missing = missingPrereqs(progress, node);
+  if (missing.length === 0 && node.unlockLevel !== undefined) {
+    return { kind: 'level', need: node.unlockLevel };
+  }
+  return { kind: 'prereq', missing, alsoLevel: node.unlockLevel };
+}
+
+/** An act is reachable once the previous act's boss is beaten. */
+export function isActOpen(progress: ProgressData, act: Act): boolean {
+  if (act === 1) return true;
+  const gate = bossOfAct((act - 1) as Act);
+  if (!gate) return true;
+  if (isNodeDone(progress, gate.id)) return true;
+  // A level-gated side branch can open its act early.
+  return nodesOfAct(act).some((n) => isUnlocked(progress, n));
 }
 
 export function missingPrereqs(progress: ProgressData, node: SkillNode): SkillNode[] {

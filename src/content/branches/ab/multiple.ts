@@ -4,6 +4,7 @@ import type { SkillNode } from '@/content/types';
 export const abMultiple: SkillNode = {
   id: 'ab.multiple',
   branch: 'ab',
+  act: 3,
   tier: 5,
   title: l('Множественные сравнения', 'Multiple comparisons'),
   blurb: l(

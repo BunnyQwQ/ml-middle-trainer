@@ -4,6 +4,7 @@ import type { SkillNode } from '@/content/types';
 export const retrievalAnn: SkillNode = {
   id: 'retrieval.ann',
   branch: 'retrieval',
+  act: 4,
   tier: 3,
   title: l('Приближённый поиск соседей', 'Approximate nearest neighbours'),
   blurb: l(

@@ -28,13 +28,12 @@ export const UI = {
   map: {
     title: l('Карта навыков', 'Skill map'),
     subtitle: l(
-      'Узлы открываются по пререквизитам. Ветки можно проходить параллельно.',
-      'Nodes unlock through prerequisites. Branches can be taken in parallel.',
+      'Акты идут по порядку, внутри акта ветки открыты параллельно. Между актами стоят испытания.',
+      'Acts run in order; inside an act the branches are open in parallel. Trials stand between the acts.',
     ),
     locked: l('Закрыто', 'Locked'),
     needs: l('Сначала нужно', 'Requires first'),
     open: l('Открыть', 'Open'),
-    boss: l('Босс', 'Boss'),
     viewTree: l('Дерево', 'Tree'),
     viewList: l('Список', 'List'),
     planned: l('В плане', 'Planned'),
@@ -43,6 +42,39 @@ export const UI = {
       'This branch arrives in a later stage.',
     ),
     nodes: l('узлов', 'nodes'),
+    acts: [
+      l('Акт I — Фундамент', 'Act I — Foundations'),
+      l('Акт II — Эксперименты', 'Act II — Experiments'),
+      l('Акт III — Качество и решения', 'Act III — Quality and decisions'),
+      l('Акт IV — Специализации', 'Act IV — Specialisations'),
+    ],
+    actBlurbs: [
+      l(
+        'Выборочный шум, доверительные интервалы и первые запросы по логам.',
+        'Sampling noise, confidence intervals and the first queries over logs.',
+      ),
+      l(
+        'Гипотезы, оконные функции, сессии и устройство A/B-теста.',
+        'Hypotheses, window functions, sessions and how an A/B test works.',
+      ),
+      l(
+        'Ловушки экспериментов, метрики качества поиска и выбор метрики.',
+        'Experiment pitfalls, search quality metrics and choosing a metric.',
+      ),
+      l(
+        'Отдельные области: реклама, retrieval, бандиты, классификация запросов.',
+        'Separate areas: ads, retrieval, bandits, query classification.',
+      ),
+    ],
+    boss: l('Испытание', 'Trial'),
+    bossHint: l(
+      'Закрывает акт и открывает следующий. Нужно решить все задания.',
+      'Closes the act and opens the next one. Every task has to be solved.',
+    ),
+    bossLocked: l('Сначала закрой узлы, которые в него ведут', 'First finish the nodes that lead into it'),
+    actLocked: l('Откроется после испытания', 'Opens after the trial'),
+    needLevel: l('Или уровень', 'Or level'),
+    sideBranch: l('Боковая ветка', 'Side branch'),
   },
   node: {
     theory: l('Теория', 'Theory'),

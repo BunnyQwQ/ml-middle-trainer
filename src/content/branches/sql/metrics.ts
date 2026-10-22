@@ -4,6 +4,7 @@ import type { SkillNode } from '@/content/types';
 export const sqlMetrics: SkillNode = {
   id: 'sql.metrics',
   branch: 'sql',
+  act: 2,
   tier: 5,
   title: l('Продуктовые метрики', 'Product metrics'),
   blurb: l(

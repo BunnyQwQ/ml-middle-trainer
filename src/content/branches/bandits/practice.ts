@@ -4,6 +4,7 @@ import type { SkillNode } from '@/content/types';
 export const banditsPractice: SkillNode = {
   id: 'bandits.practice',
   branch: 'bandits',
+  act: 4,
   tier: 3,
   title: l('Бандиты в продакшене', 'Bandits in production'),
   blurb: l(

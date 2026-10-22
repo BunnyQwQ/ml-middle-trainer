@@ -189,6 +189,8 @@ export function AuctionSim() {
       vcgRevenue: vcg.reduce((a, o) => a + o.revenue, 0),
       gspUtility: utilityAt(ownBid, 'gsp'),
       vcgUtility: utilityAt(ownBid, 'vcg'),
+      truthfulGsp: utilityAt(OWN_VALUE, 'gsp'),
+      truthfulVcg: utilityAt(OWN_VALUE, 'vcg'),
     };
   }, [ownBid]);
 
@@ -265,21 +267,21 @@ export function AuctionSim() {
         <Readout label={l('Выручка площадки, GSP', 'Platform revenue, GSP')} value={data.gspRevenue.toFixed(3)} />
         <Readout label={l('Выручка площадки, VCG', 'Platform revenue, VCG')} value={data.vcgRevenue.toFixed(3)} />
         <Readout
-          label={l('Лучшая ставка при GSP', 'Best bid under GSP')}
-          value={`${gspBest[0]} ₽`}
-          tone={Math.abs(gspBest[0] - OWN_VALUE) <= 1 ? 'ok' : 'bad'}
+          label={l('GSP: честная ставка против лучшей', 'GSP: truthful bid against the best one')}
+          value={`${data.truthfulGsp.toFixed(4)} / ${gspBest[1].toFixed(4)}`}
+          tone={gspBest[1] <= data.truthfulGsp + 1e-9 ? 'ok' : 'bad'}
         />
         <Readout
-          label={l('Лучшая ставка при VCG', 'Best bid under VCG')}
-          value={`${vcgBest[0]} ₽`}
-          tone={Math.abs(vcgBest[0] - OWN_VALUE) <= 1 ? 'ok' : 'bad'}
+          label={l('VCG: честная ставка против лучшей', 'VCG: truthful bid against the best one')}
+          value={`${data.truthfulVcg.toFixed(4)} / ${vcgBest[1].toFixed(4)}`}
+          tone={vcgBest[1] <= data.truthfulVcg + 1e-9 ? 'ok' : 'bad'}
         />
       </div>
       <p className="faint">
         {t(
           l(
-            'Зелёная кривая выходит на плато ровно в точке истинной ценности: при VCG занижать и завышать ставку одинаково бессмысленно. У GSP оптимум обычно не совпадает с ценностью — рекламодателю выгодно занижать ставку, и аукцион превращается в игру в угадайку. Платформы всё равно чаще выбирают GSP: он проще объясняется и часто приносит больше денег при равновесных ставках.',
-            'The green curve plateaus exactly at the true value: under VCG there is no point shading your bid in either direction. Under GSP the optimum usually does not coincide with the value — the advertiser profits from bidding below it, and the auction becomes a guessing game. Platforms still choose GSP more often: it is easier to explain and often brings more money at equilibrium bids.',
+            'Зелёная кривая к истинной ценности выходит на плато: при VCG честная ставка даёт столько же, сколько лучшая возможная, — занижать и завышать одинаково бессмысленно. Плато, а не острый пик: любая ставка, удерживающая ту же позицию, равноценна. У GSP всё иначе: честная ставка проигрывает лучшей, и выгодно занижать, чтобы съехать на более дешёвую позицию, потеряв немного кликов. Платформы всё равно чаще выбирают GSP: он проще объясняется и часто приносит больше денег при равновесных ставках.',
+            'The green curve reaches a plateau at the true value: under VCG the truthful bid earns exactly as much as the best possible one, so shading in either direction is pointless. A plateau rather than a sharp peak: any bid holding the same position is equivalent. GSP behaves differently: the truthful bid loses to the best one, and shading pays — you slide to a cheaper slot and give up only a few clicks. Platforms still choose GSP more often: it is easier to explain and often brings more money at equilibrium bids.',
           ),
         )}
       </p>

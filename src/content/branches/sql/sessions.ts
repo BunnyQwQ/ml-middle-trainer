@@ -4,6 +4,7 @@ import type { SkillNode } from '@/content/types';
 export const sqlSessions: SkillNode = {
   id: 'sql.sessions',
   branch: 'sql',
+  act: 2,
   tier: 4,
   title: l('Сессии', 'Sessions'),
   blurb: l(
