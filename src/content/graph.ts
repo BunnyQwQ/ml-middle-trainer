@@ -56,6 +56,9 @@ import { sysdProduction } from './branches/sysdesign/production';
 import { productMetrics } from './branches/product/metrics';
 import { productTradeoffs } from './branches/product/tradeoffs';
 import { productPrioritization } from './branches/product/prioritization';
+import { boostingGradient } from './branches/boosting/gradient';
+import { boostingCatboost } from './branches/boosting/catboost';
+import { boostingRanking } from './branches/boosting/ranking';
 import type { Act, BranchId, SkillNode } from './types';
 
 /** Every node that exists. Order inside a branch follows `tier`. */
@@ -116,6 +119,9 @@ export const NODES: SkillNode[] = [
   productMetrics,
   productTradeoffs,
   productPrioritization,
+  boostingGradient,
+  boostingCatboost,
+  boostingRanking,
 ];
 
 export const NODE_BY_ID: Record<string, SkillNode> = Object.fromEntries(

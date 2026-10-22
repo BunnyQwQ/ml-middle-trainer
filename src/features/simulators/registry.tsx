@@ -65,6 +65,7 @@ import { DataChecks, FixtureScope, MutationTesting } from './testing';
 import { Activations, InitSymmetry } from './dl';
 import { BaselineLadder, ModelDecay, TimeSplit } from './sysdesign';
 import { MoneyBridge, Prioritization } from './money';
+import { GbmSteps, ObliviousTrees, RankingLosses, TargetEncoding } from './boosting';
 
 /**
  * Content refers to interactives by id; this is the only place that maps an
@@ -139,6 +140,10 @@ export const SIMS: Record<SimId, ComponentType> = {
   'model-decay': ModelDecay,
   'money-bridge': MoneyBridge,
   prioritization: Prioritization,
+  'gbm-steps': GbmSteps,
+  'target-encoding': TargetEncoding,
+  'oblivious-trees': ObliviousTrees,
+  'ranking-losses': RankingLosses,
 };
 
 export function getSim(id: SimId): ComponentType {

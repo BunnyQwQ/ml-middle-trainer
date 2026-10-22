@@ -295,6 +295,8 @@ const ALLOWED_SOURCE_HOSTS = [
   'docs.pytest.org',
   // Martin Zinkevich, "Rules of Machine Learning" — opened and read before adding.
   'developers.google.com',
+  // The open-source library's own documentation — opened and read before adding.
+  'catboost.ai',
 ];
 
 for (const node of NODES) {

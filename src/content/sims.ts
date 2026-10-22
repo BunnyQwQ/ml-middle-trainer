@@ -85,6 +85,11 @@ export const SIM_IDS = [
   // product thinking
   'money-bridge',
   'prioritization',
+  // boosting
+  'gbm-steps',
+  'target-encoding',
+  'oblivious-trees',
+  'ranking-losses',
 ] as const;
 
 export type SimId = (typeof SIM_IDS)[number];

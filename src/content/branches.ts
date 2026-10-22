@@ -171,7 +171,7 @@ export const BRANCHES: Branch[] = [
       'CatBoost: ordered boosting, symmetric trees, YetiRank, PairLogit.',
     ),
     accent: 'var(--branch-boosting)',
-    status: 'planned',
+    status: 'ready',
     stage: 7,
     order: 13,
   },
