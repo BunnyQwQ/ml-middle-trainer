@@ -700,9 +700,57 @@ table.data th.num {
   cursor: not-allowed;
 }
 
+/* A halo in the panel colour keeps labels readable where boughs pass behind. */
+.tree__label,
+.tree__branch,
+.tree__act {
+  paint-order: stroke fill;
+  stroke: var(--bg-elev);
+  stroke-width: 4px;
+  stroke-linejoin: round;
+}
+
 .tree__label {
   font-size: 11px;
   fill: var(--text);
+}
+
+.tree__label--locked {
+  fill: var(--text-dim);
+}
+
+.tree__branch {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.tree__act {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.tree__mark {
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.tree__node circle,
+.tree__node rect {
+  transition: opacity 120ms ease, stroke-width 120ms ease;
+}
+
+.tree__node:not(.tree__node--locked):hover circle,
+.tree__node:not(.tree__node--locked):hover rect {
+  stroke-width: 4;
+}
+
+.tree__node:focus-visible circle,
+.tree__node:focus-visible rect {
+  outline: none;
+  stroke-width: 4;
 }
 
 .act {
